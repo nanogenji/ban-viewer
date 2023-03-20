@@ -1,4 +1,4 @@
-# ban-chan
+# ban-viewer
 
 ## Project setup
 ```
