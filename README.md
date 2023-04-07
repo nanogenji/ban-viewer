@@ -1,6 +1,6 @@
 ## Introduction
 
-本项目是基于Vue + element-ui 开发的 Bangumi 第三方web
+本项目是基于Vue + element-ui 开发的 Bangumi 第三方SPA
 
 大部分功能已开发完成
 
