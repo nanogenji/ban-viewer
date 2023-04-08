@@ -8,7 +8,7 @@
         <el-container>
           <el-main class="tagsMain">
             <el-card class="tagsCard">
-              <a class="TagsTitle">动画标签</a>
+              <a class="TagsTitle"><i class="el-icon-collection-tag"></i> 动画标签</a>
               <el-tag class="tag" @click="handleTag($event,2)">TV</el-tag>
               <el-tag class="tag" @click="handleTag($event,2)">剧场版</el-tag>
               <el-tag class="tag" @click="handleTag($event,2)">搞笑</el-tag>
@@ -38,7 +38,7 @@
               <el-tag class="tag" @click="handleTag($event,2)">今敏</el-tag>
             </el-card>
             <el-card class="tagsCard">
-              <a class="TagsTitle">音乐标签</a>
+              <a class="TagsTitle"><i class="el-icon-collection-tag"></i> 音乐标签</a>
               <el-tag class="tag" @click="handleTag($event,3)">OST</el-tag>
               <el-tag class="tag" @click="handleTag($event,3)">ED</el-tag>
               <el-tag class="tag" @click="handleTag($event,3)">OP</el-tag>
@@ -77,7 +77,7 @@
               <el-tag class="tag" @click="handleTag($event,3)">原声</el-tag>
             </el-card>
             <el-card class="tagsCard">
-              <a class="TagsTitle">漫画标签</a>
+              <a class="TagsTitle"><i class="el-icon-collection-tag"></i> 漫画标签</a>
               <el-tag class="tag" @click="handleTag($event,1)">漫画</el-tag>
               <el-tag class="tag" @click="handleTag($event,1)">轻小说</el-tag>
               <el-tag class="tag" @click="handleTag($event,1)">校园</el-tag>
@@ -103,7 +103,7 @@
               <el-tag class="tag" @click="handleTag($event,1)">短篇</el-tag>
             </el-card>
             <el-card class="tagsCard">
-              <a class="TagsTitle">游戏标签</a>
+              <a class="TagsTitle"><i class="el-icon-collection-tag"></i> 游戏标签</a>
               <el-tag class="tag" @click="handleTag($event,4)">PC</el-tag>
               <el-tag class="tag" @click="handleTag($event,4)">RPG</el-tag>
               <el-tag class="tag" @click="handleTag($event,4)">ACT</el-tag>
@@ -186,7 +186,6 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.TagForm.type,this.TagForm.tag)
           this.$router.push({
           path:'searchresult',
           query:{

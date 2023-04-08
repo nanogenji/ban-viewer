@@ -30,7 +30,6 @@ export default new Vuex.Store({
       context.commit('GET_TAG',value)
     },
     getUsername(context){
-      console.log('actions'+JSON.parse(localStorage.getItem('isLogin')))
       if(JSON.parse(localStorage.getItem('isLogin'))){
         context.commit('GET_USERNAME',localStorage.getItem('username'))
       }

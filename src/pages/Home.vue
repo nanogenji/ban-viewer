@@ -14,7 +14,7 @@
       <div class="itemContainer">
         <MainCard v-for="item in items" :key='item.id'
         :id='item.id'
-        :img='item.images.large'
+        :img='item.images?item.images.large:"无图片"'
         :name='item.name_cn?item.name_cn:item.name'
         :collection='item.collection'
         />
@@ -32,12 +32,27 @@ export default {
       items:[],
       current:0,//当前星期
       totalData:[],
-      apiError:''
+      apiError:'',
+      doing:''
     }
   },
   components:{
     MainCard,
     WeekdayNavi
+  },
+  methods:{
+    //doing排序
+    compare(obj1, obj2){
+      let val1 = obj1.collection.doing?obj1.collection.doing:0
+      let val2 = obj2.collection.doing?obj2.collection.doing:0
+      if(val1 < val2){
+        return 1
+      }
+      else if(val1 > val2){
+        return -1
+      }
+      return 0
+    }
   },
   //更改星期数
   //$bus写法
@@ -62,9 +77,21 @@ export default {
     }
     axios.get('https://api.bgm.tv/calendar').then( //'http://localhost:8080/api/calendar'
       response => {
-        console.log(response)
         this.items = response.data[0].items//默认星期数
+        console.log(this.items)
+        for(let i = 0;i < 7;i++){
+          for(let j = 0;j < response.data[i].items.length;j++){//部分item没有collection.doing属性
+            if(!response.data[i].items[j].collection){
+              response.data[i].items[j].collection = {doing:0}
+              console.log(response.data[i].items[j])
+            }
+          }
+          response.data[i].items.sort(this.compare)//按doing人数排序
+        }
+        // console.log(response.data)
+        // console.log(response.data[0].items.sort(this.compare))
         this.totalData = response
+        console.log(this.totalData)
       },
       error => {
         this.apiError = error.message

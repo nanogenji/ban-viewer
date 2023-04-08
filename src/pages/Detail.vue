@@ -31,7 +31,29 @@
                   <span class="dot">...</span>
                 </div>
               </el-image>
-          </div>
+            </div>
+            <div class="player" style="padding:10px" shadow="never">
+              <a class="playerTitle">播放源:</a>
+              <el-button class="findplayer" round plain size="mini" :loading="findPlayerLoading" v-show="findShow" @click="findPlayer">查找播放源</el-button>
+              <div class="playerResource" v-show="!findShow">
+                <a v-show="isbili" :href="bilisrc" style="marginRight:0.3rem">
+                  <img src='../assets/bilibili.svg'>
+                </a>
+                <a v-show="isacfun" :href="acfunsrc" style="marginRight:0.3rem">
+                  <img src='../assets/acfun.svg'>
+                </a>
+                <a v-show="iswetv" :href="wetvsrc" style="marginRight:0.3rem">
+                  <img src='../assets/wetv.svg'>
+                </a>
+                <a v-show="isiqiyi" :href="iqiyisrc" style="marginRight:0.3rem">
+                  <img src='../assets/iqiyi.svg'>
+                </a>
+                <a v-show="isyouku" :href="youkusrc" style="marginRight:0.3rem">
+                  <img src='../assets/youku.svg'>
+                </a>
+              </div>
+              <div class="notfound" v-show="notfound"><a>未找到播放源</a></div>
+            </div>
             <!-- staff信息 -->
             <!-- cell-style设置背景色 -->
             <el-table
@@ -72,6 +94,14 @@
                 :score-template="item.rating.score.toString()"
                 >
               </el-rate>
+              <div class="collection">
+                <a style='marginRight:0.6rem'>{{item.rating.total}}评分</a>
+                <a style='marginRight:0.6rem'>{{item.collection.wish}}想看</a>
+                <a style='marginRight:0.6rem'>{{item.collection.collect}}看过</a>
+                <a style='marginRight:0.6rem'>{{item.collection.doing}}在看</a>
+                <a style='marginRight:0.6rem'>{{item.collection.on_hold}}搁置</a>
+                <a style='marginRight:0.6rem'>{{item.collection.dropped}}抛弃</a>
+              </div>
             </el-card>
             <el-card class="box-card summary" shadow="never">
               <a v-if="item.summary" style="padding:1rem 1.1rem 1rem 1.1rem;display:block;">{{item.summary}}</a>
@@ -123,19 +153,91 @@ export default {
       characters:[],
       infoList:[],
       apiError:false,
-      errorMsg:''
+      errorMsg:'',
+      findPlayerLoading:false,
+      notfound:false,
+      findShow:true,
+      isbili:false,
+      isacfun:false,
+      iswetv:false,
+      isiqiyi:false,
+      isyouku:false,
+      bilisrc:'',
+      acfunsrc:'',
+      wetvsrc:'',
+      iqiyisrc:'',
+      youkusrc:''
     }
   },
   components:{
     CharacterCard
   },
   methods:{
+    findPlayer(){
+      this.findPlayerLoading = true
+      // let catalog = this.item.id/1000
+      // console.log(catalog)
+      axios.get(`https://cdn.jsdelivr.net/gh/ekibot/bangumi-onair/onair/${Math.floor(this.item.id/1000)}/${this.item.id}.json`).then(
+        response => {
+          this.findPlayerLoading = false
+          console.log(response.data)
+          this.findShow = false
+          for(let i = 0;i < response.data.sites.length;i++){
+            if(response.data.sites[i].site === 'iqiyi'){
+              this.isiqiyi = true
+              for(let j = 0;j < response.data.eps[0].sites.length;j++){
+                if(response.data.eps[0].sites[j].site === 'iqiyi'){
+                  this.iqiyisrc = response.data.eps[0].sites[j].url
+                }
+              }
+            }
+            else if(response.data.sites[i].site === 'qq'){
+              this.iswetv = true
+              for(let j = 0;j < response.data.eps[0].sites.length;j++){
+                if(response.data.eps[0].sites[j].site === 'qq'){
+                  this.wetvsrc = response.data.eps[0].sites[j].url
+                }
+              }
+            }
+            else if(response.data.sites[i].site === 'youku'){
+              this.isyouku = true
+              for(let j = 0;j < response.data.eps[0].sites.length;j++){
+                if(response.data.eps[0].sites[j].site === 'youku'){
+                  this.youkusrc = response.data.eps[0].sites[j].url
+                }
+              }
+            }
+            else if(response.data.sites[i].site === 'bilibili'){
+              this.isbili = true
+              for(let j = 0;j < response.data.eps[0].sites.length;j++){
+                if(response.data.eps[0].sites[j].site === 'bilibili'){
+                  this.bilisrc = response.data.eps[0].sites[j].url
+                }
+              }
+            }
+            else if(response.data.sites[i].site === 'acfun'){
+              this.isacfun = true
+              for(let j = 0;j < response.data.eps[0].sites.length;j++){
+                if(response.data.eps[0].sites[j].site === 'acfun'){
+                  this.acfunsrc = response.data.eps[0].sites[j].url
+                }
+              }
+            }
+          }
+        },
+        error => {
+          this.findPlayerLoading = false
+          this.findShow = false
+          this.notfound = true
+          console.log(error.message)
+        }
+      )
+    },
     //侧栏css
     cellStyle(){
       return 'background-color: #fcfcfc;'
     },
     handleTag(value){
-      console.log(value)
       this.$router.push({
         path:'searchresult',
         query:{
@@ -148,8 +250,8 @@ export default {
     //剧集信息
     axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}`).then(//不用跨域http://localhost:8080/api/v0/subjects/${this.$route.query.id}
       response => {
-        console.log(response)
         this.item = response.data
+        console.log(this.item)
         //过滤无效info，防止undefined
         for(let i=0;i<this.item.infobox.length;i++){
           // eslint-disable-next-line
@@ -173,7 +275,6 @@ export default {
       response => {
         this.characters = response.data
         this.characters = this.characters.slice(0,41)//长篇作品人物过多，限制41
-        console.log(this.characters)
       },
       error => {
         console.log(error.message)
@@ -187,6 +288,7 @@ export default {
   .detailContainer{
     width: 75%;
     min-height: 1000px;
+    min-width: 900px;
     padding-bottom: 5rem;
     margin-top: -7.4rem;
     border-radius: 0.75rem;
@@ -242,6 +344,41 @@ export default {
           border-radius: 0.5rem;
         }
       }
+      .player{
+        width: 250px;
+        margin: 1.5rem 0 0rem 6rem;
+        padding: 10px;
+        border-radius: 0.75rem;
+        background-color: #fcfcfc;
+        line-height: 1.8;
+        // border: 1px solid #EBEEF5;
+        display: flex;
+        justify-content: flex-start;
+        .playerTitle{
+          color: #636e72;
+          font-size: 0.9rem;
+          margin-left: 10px;
+          margin-top: 2px;
+          text-align: center;
+        }
+        .playerResource{
+          margin-left: 25px;
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+        }
+        .findplayer{
+          border-radius:0.5rem;
+          background-color:#fcfcfc;
+          margin-left: 3rem;
+        }
+        .notfound{
+          margin-top: 0.2rem;
+          font-size: 0.8rem;
+          color: #636e72;
+
+        }
+      }
       .infoTable{
         width: 250px;
         min-width: 100px;
@@ -253,6 +390,7 @@ export default {
       }
     }
     .detailMain{
+      min-width: 600px;
       padding-top: 2rem;
       display: flex;
       flex-flow: column nowrap;
@@ -263,6 +401,14 @@ export default {
         margin-left: 5rem;
         border-radius: 0.75rem;
         background-color: rgba(252, 252, 252, 0);
+        .collection{
+          // background-color: #000000;
+          // display: flex;
+          // justify-content:space-between;
+          margin-top: 0.5rem;
+          color: #636e72;
+          font-size: 0.6rem;
+        }
       }
       .summary{
         width: 70%;
@@ -282,12 +428,15 @@ export default {
         }
         .tag{
           margin: 0.4rem 0.6rem 0.4rem 0.2rem;
+          border-radius: 0.5rem;
         }
         .tag:hover{
           cursor: pointer;
         }
         .tagName{
-          color: #409eff;
+          // color: #409eff;
+          color: #636e72;
+          font-weight:600;
         }
         .tagCount{
           margin-left: 0.2rem;

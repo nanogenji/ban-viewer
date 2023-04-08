@@ -156,7 +156,6 @@ export default {
     },
     handleCurrentChange(val){
       this.currentPage = val
-      console.log("当前页"+this.currentPage)
       axios.post(`https://api.bgm.tv/v0/search/subjects?limit=10&offset=${(this.currentPage-1)*10}`,this.searchdata).then(
         response => {
           this.searchResItems = response.data.data
@@ -194,12 +193,10 @@ export default {
         this.searchdata.filter.air_date[0] = this.datePickStart
         this.searchdata.filter.air_date[1] = this.datePickEnd
       }
-      console.log(this.searchdata)
       axios.post(`https://api.bgm.tv/v0/search/subjects?limit=10&offset=0`,this.searchdata).then(
         response => {
           this.searchResItems = response.data.data //data.data
           this.searchResTotal = response.data.total
-          console.log(response.data)
         },
         error => {
           this.apiError = true
@@ -213,7 +210,6 @@ export default {
     //监听搜索关键词，实现重复搜索
     '$route.query.inputValue':{
       handler:function(){
-        console.log(this.searchdata)
         // this.$router.go(0)
         location.reload();
       },
@@ -223,13 +219,11 @@ export default {
       handler(newValue){
         this.searchdata.filter.tag[0] = newValue
         this.searchdata.keyword = undefined//关键词与tag互斥
-        console.log(this.searchdata)
         axios.post(`https://api.bgm.tv/v0/search/subjects?limit=10&offset=${(this.currentPage-1)*10}`,this.searchdata).then(
           response => {
             this.searchResItems = response.data.data //data.data
             this.searchResTotal = response.data.total
             this.isloading = false
-            console.log(response.data)
           },
           error => {
             this.apiError = true

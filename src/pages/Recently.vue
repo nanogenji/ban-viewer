@@ -105,7 +105,6 @@ export default {
     },
     handleCurrentChange(val){
       this.currentPage = val
-      console.log("当前页"+this.currentPage)
       axios.post(`https://api.bgm.tv/v0/search/subjects?limit=10&offset=${(this.currentPage-1)*10}`,this.searchdata).then(
         response => {
           this.recentlyItems = response.data.data
@@ -139,7 +138,6 @@ export default {
     this.searchdata.filter.type[0] = Number(this.$route.query.type)
     axios.post(`https://api.bgm.tv/v0/search/subjects?limit=10&offset=${(this.currentPage-1)*10}`,this.searchdata).then(
       response => {
-        console.log(response.data.data)
         this.recentlyItems = this.objArraySort(response.data.data,'score')
         for (let i = 0; i < this.recentlyItems.length; i++) {
           this.recentlyItems[i].type= this.type// 添加type属性

@@ -102,7 +102,6 @@ export default {
       return 'background-color: #fcfcfc;'
     },
     handleTag(value){
-      console.log(value)
       this.$router.push({
         path:'searchresult',
         query:{
@@ -112,7 +111,6 @@ export default {
     }
   },
   created(){
-    console.log(this.$route.query.actorId)
     //剧集信息
     axios.get(`https://api.bgm.tv/v0/persons/${this.$route.query.actorId}`).then(
       response => {

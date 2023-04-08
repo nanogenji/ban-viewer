@@ -5,14 +5,23 @@
         class="itemImg"
         :src='img'
         :fit="'fill'"
-      />
+      >
+      <div class="alt" slot="error">
+        <i class="el-icon-picture-outline"></i>
+        <a style="fontSize:1rem">暂无图片</a>
+      </div>
+      <div class="alt" slot="placeholder">
+        <i class="el-icon-loading"></i>
+        <a style="fontSize:0.8rem">加载中...</a>
+      </div>
+      </el-image>
     </div>
     <div class="title">
       <a>{{name}}</a>
     </div>
     <div class="doing">
       <!-- 部分item没有doing属性 -->
-      <a v-if="collection?.doing">{{collection.doing}}人在看</a>
+      <a v-if="collection.doing!==0">{{collection.doing}}人在看</a>
       <a v-else>暂时没人在看哦</a>
     </div>
   </div>
@@ -68,8 +77,20 @@ export default {
         width: 100%;
         height: 352px;
         border-radius: 0.5rem;
-        background-color: #000;
+        background-color: #f5f4f4;
         overflow: hidden;
+        display: flex;
+        justify-content:space-around;
+        .alt{
+          height: 30px;
+          display: flex;
+          flex-flow: column nowrap;
+          justify-content:flex-start;
+          align-items: center;
+          margin: auto 0;
+          font-size: 1.8rem;
+          color: #909399;
+        }
       }
     }
     .imgContainer:hover{

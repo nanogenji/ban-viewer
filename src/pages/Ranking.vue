@@ -146,12 +146,10 @@ export default {
         this.searchdata.filter.air_date[0] = this.datePickStart
         this.searchdata.filter.air_date[1] = this.datePickEnd
       }
-      console.log(this.searchdata)
       axios.post(`https://api.bgm.tv/v0/search/subjects?limit=10&offset=0`,this.searchdata).then(
         response => {
           this.rankingItems = response.data.data //data.data
           this.rankingTotal = response.data.total
-          console.log(response.data)
         },
         error => {
           this.apiError = true
@@ -172,7 +170,6 @@ export default {
   created(){
     this.type = Number(this.$route.query.type)
     this.searchdata.filter.type[0] = Number(this.$route.query.type)
-    console.log(this.searchdata)
     axios.post(`https://api.bgm.tv/v0/search/subjects?limit=10&offset=${(this.currentPage-1)*10}`,this.searchdata).then(
       response => {
         this.rankingItems = response.data.data //data.data
@@ -181,7 +178,6 @@ export default {
           this.rankingItems[i].type = this.type //添加type属性
         }
         this.isloading = false
-        console.log(response.data)
       },
       error => {
         this.apiError = true

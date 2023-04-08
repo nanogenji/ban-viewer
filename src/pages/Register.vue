@@ -121,7 +121,6 @@ export default {
               type: 'success'
             });
             setTimeout(this.toLogin(),1000)
-            console.log(this.registerForm);
           }
           else{
             this.$message({

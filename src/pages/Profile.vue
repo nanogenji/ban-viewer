@@ -315,7 +315,6 @@ export default {
             type: 'success'
           });
           this.dialogVisible = false
-          console.log('密码修改成功'+this.changepwdForm.newpwd)
         } else {
           console.log('error submit!!');
           return false;

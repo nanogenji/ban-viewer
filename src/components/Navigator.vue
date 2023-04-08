@@ -7,10 +7,10 @@
           <a style="letterSpacing:3px">影视</a>
           <div class="dropdown-container">
             <ul class="dropdown">
-              <li class="dropdown-item" @click="toRanking(2)">Top50</li>
-              <li class="dropdown-item" @click="toRecently(2)">近期新作</li>
-              <li class="dropdown-item" @click="toTags(2)">热门标签</li>
-              <li class="dropdown-item" @click="toViewAll(2)">查看全部</li>
+              <li class="dropdown-item" @click="toRanking(2)"><i class="el-icon-trophy"></i><a style="marginLeft:12px">Top50</a></li>
+              <li class="dropdown-item" @click="toRecently(2)"><i class="el-icon-time"></i><a style="marginLeft:12px">近期新作</a></li>
+              <li class="dropdown-item" @click="toTags(2)"><i class="el-icon-guide"></i><a style="marginLeft:12px">热门标签</a></li>
+              <li class="dropdown-item" @click="toViewAll(2)"><i class="el-icon-files"></i><a style="marginLeft:12px">查看全部</a></li>
             </ul>
           </div>
         </li>
@@ -18,10 +18,10 @@
           <a style="letterSpacing:3px">音乐</a>
           <div class="dropdown-container">
             <ul class="dropdown">
-              <li class="dropdown-item" @click="toRanking(3)">Top50</li>
-              <li class="dropdown-item" @click="toRecently(3)">近期新作</li>
-              <li class="dropdown-item" @click="toTags(3)">热门标签</li>
-              <li class="dropdown-item" @click="toViewAll(3)">查看全部</li>
+              <li class="dropdown-item" @click="toRanking(3)"><i class="el-icon-trophy"></i><a style="marginLeft:12px">Top50</a></li>
+              <li class="dropdown-item" @click="toRecently(3)"><i class="el-icon-time"></i><a style="marginLeft:12px">近期新作</a></li>
+              <li class="dropdown-item" @click="toTags(3)"><i class="el-icon-guide"></i><a style="marginLeft:12px">热门标签</a></li>
+              <li class="dropdown-item" @click="toViewAll(3)"><i class="el-icon-files"></i><a style="marginLeft:12px">查看全部</a></li>
             </ul>
           </div>
         </li>
@@ -29,10 +29,10 @@
           <a style="letterSpacing:3px">图书</a>
           <div class="dropdown-container">
             <ul class="dropdown">
-              <li class="dropdown-item" @click="toRanking(1)">Top50</li>
-              <li class="dropdown-item" @click="toRecently(1)">近期新作</li>
-              <li class="dropdown-item" @click="toTags(1)">热门标签</li>
-              <li class="dropdown-item" @click="toViewAll(1)">查看全部</li>
+              <li class="dropdown-item" @click="toRanking(1)"><i class="el-icon-trophy"></i><a style="marginLeft:12px">Top50</a></li>
+              <li class="dropdown-item" @click="toRecently(1)"><i class="el-icon-time"></i><a style="marginLeft:12px">近期新作</a></li>
+              <li class="dropdown-item" @click="toTags(1)"><i class="el-icon-guide"></i><a style="marginLeft:12px">热门标签</a></li>
+              <li class="dropdown-item" @click="toViewAll(1)"><i class="el-icon-files"></i><a style="marginLeft:12px">查看全部</a></li>
             </ul>
           </div>
         </li>
@@ -40,10 +40,10 @@
           <a style="letterSpacing:3px">游戏</a>
           <div class="dropdown-container">
             <ul class="dropdown">
-              <li class="dropdown-item" @click="toRanking(4)">Top50</li>
-              <li class="dropdown-item" @click="toRecently(4)">近期新作</li>
-              <li class="dropdown-item" @click="toTags(4)">热门标签</li>
-              <li class="dropdown-item" @click="toViewAll(4)">查看全部</li>
+              <li class="dropdown-item" @click="toRanking(4)"><i class="el-icon-trophy"></i><a style="marginLeft:10px">Top50</a></li>
+              <li class="dropdown-item" @click="toRecently(4)"><i class="el-icon-time"></i><a style="marginLeft:10px">近期新作</a></li>
+              <li class="dropdown-item" @click="toTags(4)"><i class="el-icon-guide"></i><a style="marginLeft:10px">热门标签</a></li>
+              <li class="dropdown-item" @click="toViewAll(4)"><i class="el-icon-files"></i><a style="marginLeft:10px">查看全部</a></li>
             </ul>
           </div>
         </li>
@@ -111,7 +111,7 @@ export default {
     },
     toViewAll(type){
       this.$router.push({
-        path:'/searchResult',
+        path:'/searchresult',
         query:{
           type
         }
@@ -157,8 +157,10 @@ export default {
 
 <style scoped lang='scss'>
   .navi{
+    position: fixed;
     height: 80px;
     width: 65%;
+    min-width: 690px;
     z-index: 999;
     display: flex;
     flex-flow: row nowrap;
@@ -173,7 +175,7 @@ export default {
       justify-content: space-evenly;
       align-items: center;
       border-radius: 0.5rem;
-      // backdrop-filter: saturate(200%) blur(30px);//与.dropdown-container的同属性互斥
+      backdrop-filter: saturate(200%) blur(30px);//与.dropdown-container的同属性互斥
       background-color: #fffc!important;
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
       .brand{
@@ -214,15 +216,16 @@ export default {
           display: none;
           opacity: 0;
           position: absolute;
-          top: 4.3rem;
+          top: 3.5rem;
           width: 10rem;
           height: 10rem;
           padding:1rem 1rem 2rem 1rem;
           list-style: none;
           border-radius: 0.5rem;
-          background-color: #fffc!important;
+          // background-color: #fffc!important;
+          background-color: #fffefe;
           box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-          backdrop-filter: saturate(200%) blur(30px);
+          // backdrop-filter: saturate(200%) blur(30px);
           .dropdown{
             padding-left: 0;
             list-style: none;
