@@ -104,7 +104,7 @@ export default {
       margin-left: 0.6rem;
       font-size: 1.2rem;
       font-weight: 600;
-      color: #344767;
+      color: var(--primary-text);
     }
     .doing{
       margin-left: 0.6rem;

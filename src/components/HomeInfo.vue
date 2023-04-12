@@ -45,6 +45,7 @@ export default {
 <style scoped lang='scss'>
   .container{
     width: 50%;
+    // height: 380px;
     min-height: 36%;
     margin-top: 6rem;
     display: flex;

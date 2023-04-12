@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <div :class="{footer:true,light:!isDark,dark:isDark}">
     <div class="footerMain">
       <div class="footerInfo">
         <i class="el-icon-video-camera-solid"></i>
@@ -57,7 +57,23 @@
 
 <script>
 export default {
-  name:'Footer'
+  name:'Footer',
+  data(){
+    return{
+      isDark:false
+    }
+  },
+  watch:{
+    '$store.state.isDark':{
+      handler:function(newValue){
+        this.isDark = newValue
+      }
+    }
+  },
+  created() {
+    this.isDark = JSON.parse(localStorage.getItem('isDark'))
+
+  },
 }
 </script>
 
@@ -83,10 +99,10 @@ export default {
         .el-icon-video-camera-solid{
           margin-top: 0.3rem;
           font-size: 2.5rem;
-          color: #344767;
+          color: var(--primary-text);
         }
         .brand{
-          color: #344767;
+          color: var(--primary-text);
           margin-top: 1rem;
           font-size: 1.1rem;
           font-weight: 700;
@@ -100,7 +116,7 @@ export default {
           justify-content:space-between;
           .icon{
             font-size: 1.4rem;
-            color: #344767;
+            color: var(--primary-text);
           }
         }
       }
@@ -111,18 +127,18 @@ export default {
           height: 30px;
           font-weight: 600;
           font-size: 0.8rem;
-          color: #344767;
+          color: var(--primary-text);
         }
         .content{
           line-height: 1.7;
           font-size: 0.8rem;
-          color: #344767;
+          color: var(--primary-text);
         }
       }
     }
     .copyright{
       font-size: 0.9rem;
-      color: #344767;
+      color: var(--primary-text);
     }
   }
 </style>

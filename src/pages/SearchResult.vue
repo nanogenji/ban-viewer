@@ -25,8 +25,6 @@
             @select="handleSelect"
             :default-active="String(this.searchdata.filter.type[0])"
             class="el-menu-vertical-demo"
-            background-color="#fcfcfc"
-            text-color="#000000"
             active-text-color="#ff8b88">
             <el-menu-item index="2">
               <i class="el-icon-film"></i>
@@ -62,7 +60,7 @@
               value-format="yyyy-MM-dd"
               size="small">
             </el-date-picker>
-            <el-button  style="width:50%;marginRight:7.4rem" size="samll" round @click="datePickBtn">确定</el-button>
+            <el-button class="datePickerBtn" size="samll" round @click="datePickBtn">确定</el-button>
           </div>
             <!--  -->
         </el-aside>
@@ -287,9 +285,8 @@ export default {
     padding-bottom: 5rem;
     margin-top: -7.4rem;
     border-radius: 0.75rem;
-    background-color: #fff;
     backdrop-filter: saturate(600%) blur(30px);
-    background-color: #fffc!important;
+    background-color: var(--regular-background);
     box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1);
     display: flex;
     flex-flow: column nowrap;
@@ -312,12 +309,12 @@ export default {
       margin-top: 8rem;
       .el-icon-s-promotion{
         font-size: 5rem;
-        color: #344767;
+        color: var(--primary-text);
       }
       .nonePickContant{
         width: 70%;
         margin-top: 1rem;
-        color: #344767;
+        color: var(--primary-text);
         text-align: center;
       }
     }
@@ -345,7 +342,13 @@ export default {
           margin-top: 8rem;
           margin-left: 1.3rem;
           font-size: 1.1rem;
-          color: #344767;
+          color: var(--primary-text);;
+        }
+        .el-menu-vertical-demo{
+          background-color: var(--regular-background);
+          .el-menu-item{
+            color: var(--primary-text);
+          }
         }
         .datePicker{
           height: 150px;
@@ -356,8 +359,14 @@ export default {
           justify-content: space-between;
           align-items: center;
           /deep/.el-input__inner{
-            background-color: #fcfcfc;
+            background-color: var(--regular-background);;
             border: none;
+          }
+          .datePickerBtn{
+            width:50%;
+            margin-right:7.4rem;
+            color: var(--primary-text);;
+            background-color: var(--secondary-background);
           }
         }
       }
@@ -378,5 +387,14 @@ export default {
   }
   /deep/.el-pagination.is-background .el-pager li:not(.disabled):hover {
     color: #ffbebc;
+  }
+  /deep/.el-pagination.is-background .btn-next{
+    background-color: var(--btn-background);
+  }
+  /deep/.el-pagination.is-background .btn-prev{
+    background-color: var(--btn-background);
+  }
+  /deep/.el-pagination.is-background .el-pager li{
+    background-color: var(--btn-background);
   }
 </style>

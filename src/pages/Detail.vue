@@ -154,6 +154,7 @@ export default {
       infoList:[],
       apiError:false,
       errorMsg:'',
+      isDark:false,
       findPlayerLoading:false,
       notfound:false,
       findShow:true,
@@ -235,7 +236,7 @@ export default {
     },
     //侧栏css
     cellStyle(){
-      return 'background-color: #fcfcfc;'
+      return 'background-color: var(--secondary-background)'
     },
     handleTag(value){
       this.$router.push({
@@ -247,6 +248,7 @@ export default {
     }
   },
   created(){
+    this.isDark = JSON.parse(localStorage.getItem('isDark'))
     //剧集信息
     axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}`).then(//不用跨域http://localhost:8080/api/v0/subjects/${this.$route.query.id}
       response => {
@@ -292,9 +294,8 @@ export default {
     padding-bottom: 5rem;
     margin-top: -7.4rem;
     border-radius: 0.75rem;
-    background-color: #fff;
     backdrop-filter: saturate(600%) blur(30px);
-    background-color: #fffc!important;
+    background-color: var(--regular-background);
     box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1);
     display: flex;
     flex-flow: column nowrap;
@@ -349,7 +350,7 @@ export default {
         margin: 1.5rem 0 0rem 6rem;
         padding: 10px;
         border-radius: 0.75rem;
-        background-color: #fcfcfc;
+        background-color: var(--secondary-background);
         line-height: 1.8;
         // border: 1px solid #EBEEF5;
         display: flex;
@@ -369,7 +370,7 @@ export default {
         }
         .findplayer{
           border-radius:0.5rem;
-          background-color:#fcfcfc;
+          background-color:var(--secondary-background);
           margin-left: 3rem;
         }
         .notfound{
@@ -386,7 +387,7 @@ export default {
         margin-top: 2rem;
       }
       /deep/.infoTable{
-        background-color: #fcfcfc;
+        background-color: var(--secondary-background);
       }
     }
     .detailMain{
@@ -401,6 +402,7 @@ export default {
         margin-left: 5rem;
         border-radius: 0.75rem;
         background-color: rgba(252, 252, 252, 0);
+        color: var(--primary-text);
         .collection{
           // background-color: #000000;
           // display: flex;
@@ -414,21 +416,25 @@ export default {
         width: 70%;
         margin: 1.5rem 0 2rem 5rem;
         border-radius: 0.75rem;
-        background-color: #fcfcfc;
+        background-color: var(--secondary-background);
         line-height: 1.8;
+        color: var(--primary-text);
       }
       .tagContainer{
         width: 70%;
         margin: 0 0 3rem 5rem;
         border-radius: 0.75rem;
-        background-color: #fafafa;
+        // background-color: #fafafa;
+        background-color: var(--secondary-background);
         .tagTitle{
           display: block;
           margin-bottom: 0.6rem;
+          color: var(--primary-text);
         }
         .tag{
           margin: 0.4rem 0.6rem 0.4rem 0.2rem;
           border-radius: 0.5rem;
+          background-color: var(--btn-background);
         }
         .tag:hover{
           cursor: pointer;
@@ -446,7 +452,8 @@ export default {
         width: 70%;
         margin: 0 0 3rem 5rem;
         border-radius: 0.75rem;
-        background-color: #fafafa;
+        // background-color: #fafafa;
+        background-color: var(--secondary-background);
         .charactersTitle{
           display: block;
           margin-bottom: 0.6rem;

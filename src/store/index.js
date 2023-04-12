@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     currentWeekNumber:0,
     tag:'',
-    username:''
+    username:'',
+    isDark:false
   },
   getters: {
   },
@@ -20,6 +21,10 @@ export default new Vuex.Store({
     },
     GET_USERNAME(state,value){
       state.username = value
+    },
+    GET_ISDARK(state){
+      state.isDark = !state.isDark
+      localStorage.setItem('isDark',state.isDark)
     }
   },
   actions: {
@@ -36,6 +41,9 @@ export default new Vuex.Store({
       else{
         context.commit('GET_USERNAME','')
       }
+    },
+    getIsDark(context){
+      context.commit('GET_ISDARK')
     }
   },
   modules: {

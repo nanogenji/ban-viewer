@@ -5,7 +5,7 @@
         <el-page-header @back="goBack" content="详情页面">
         </el-page-header>
       </div>
-      <h2>社区指导原则</h2>
+      <h2 class="agreementTitle">社区指导原则</h2>
       <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span class="encourage">鼓励</span>
@@ -76,9 +76,8 @@ export default {
     padding-bottom: 5rem;
     margin-top: -7.4rem;
     border-radius: 0.75rem;
-    background-color: #fff;
     backdrop-filter: saturate(600%) blur(30px);
-    background-color: #fffc!important;
+    background-color: var(--regular-background);
     box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1);
     display: flex;
     flex-flow: column nowrap;
@@ -97,13 +96,19 @@ export default {
         height: 100px;
         display: flex;
         align-items: center;
+        color: var(--primary-text);
+      }
+      .agreementTitle{
+        color: var(--primary-text);
       }
       .box-card{
         width: 50%;
         border-radius: 0.75rem;
         margin: 2rem 0 2rem 0;
+        background-color: var(--secondary-background);
         .rules{
           line-height: 2rem;
+          color: var(--primary-text);
         }
         .encourage{
           font-size: 1.1rem;
@@ -122,6 +127,7 @@ export default {
           font-size: 0.9rem;
           font-weight: 600;
           margin-left: 24px;
+          color: var(--pure);
         }
       }
     }

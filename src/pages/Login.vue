@@ -11,11 +11,11 @@
           <el-input type="password" v-model="loginForm.pass" maxlength=16 autocomplete="off" :show-password='true' placeholder='请输入密码'></el-input>
         </el-form-item>
         <el-form-item>
-          <el-link type="primary" :underline="false" @click="toRegister">没有账号？点击注册</el-link>
+          <el-link :underline="false" @click="toRegister">没有账号？点击注册</el-link>
         </el-form-item>
         <el-form-item class="btnContainer">
-          <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
-          <el-button @click="resetForm('loginForm')">重置</el-button>
+          <el-button class="submitBtn" type="primary" @click="submitForm('loginForm')">登录</el-button>
+          <el-button class="resetBtn" @click="resetForm('loginForm')">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -121,9 +121,8 @@ export default {
     padding-bottom: 5rem;
     margin-top: -7.4rem;
     border-radius: 0.75rem;
-    background-color: #fff;
     backdrop-filter: saturate(600%) blur(30px);
-    background-color: #fffc!important;
+    background-color: var(--regular-background);
     box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1);
     display: flex;
     flex-flow: column nowrap;
@@ -135,7 +134,7 @@ export default {
       margin-top: 9rem;
       display: flex;
       flex-flow: column nowrap;
-      background-color: #fcfcfc;
+      background-color: var(--secondary-background);
       box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
       justify-content:space-around;
       align-items: center;
@@ -143,12 +142,14 @@ export default {
       .loginTitle{
         margin-top: -7rem;
         font-size: 1.7rem;
+        color: var(--primary-text);
       }
       .welcome{
         margin-top: 4rem;
         font-weight: 500;
         font-size: 1.6rem;
         letter-spacing:2px;
+        color: var(--primary-text);
       }
       .loginForm{
         width: 84%;
@@ -158,6 +159,12 @@ export default {
         .el-form--label-top .el-form-item__label{
           padding: 0;
         }
+        /deep/.el-input__inner{
+          background-color: var(--regular-background);
+        }
+        /deep/.el-link.el-link--default{
+          color: var(--primary-color);
+        }
       }
       .btnContainer{
         width: 100%;
@@ -165,7 +172,14 @@ export default {
         flex-flow: row nowrap;
         justify-content: space-around;
         align-items: center;
+        .submitBtn{
+          background-color: var(--primary-color);
+          border: var(--primary-color);
         }
+        .resetBtn{
+          background-color: var(--btn-background);
+        }
+      }
     }
   }
 </style>

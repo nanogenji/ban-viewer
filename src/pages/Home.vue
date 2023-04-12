@@ -1,5 +1,5 @@
 <template>
-  <div class="Home">
+  <div :class="{Home:true,dark:isDark,light:!isDark}">
     <div class="weekContainer">
       <WeekdayNavi/>
     </div>
@@ -33,7 +33,8 @@ export default {
       current:0,//当前星期
       totalData:[],
       apiError:'',
-      doing:''
+      doing:'',
+      isDark:false
     }
   },
   components:{
@@ -68,10 +69,18 @@ export default {
       handler:function(newValue){
         this.items = this.totalData.data[newValue].items
       }
+    },
+    '$store.state.isDark':{
+      handler:function(newValue){
+        this.isDark = newValue
+      }
     }
   },
+  // beforeCreate(){
+  // },
   //获取放送信息
   created(){
+    this.isDark = JSON.parse(localStorage.getItem('isDark'))
     if(!localStorage.getItem('isLogin')){
       localStorage.setItem('isLogin',false);
     }
@@ -109,9 +118,9 @@ export default {
     padding-bottom: 5rem;
     margin-top: -7.4rem;
     border-radius: 0.75rem;
-    background-color: #fff;
     backdrop-filter: saturate(600%) blur(30px);
-    background-color: #fffc!important;
+    // background-color: #fffc;
+    background-color: var(--regular-background);
     box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1);
     display: flex;
     flex-flow: column nowrap;

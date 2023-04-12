@@ -18,6 +18,11 @@
 <script>
 export default {
   name:'CharacterCard',
+  // data(){
+  //   return{
+  //     isDark:false
+  //   }
+  // },
   props:{
     id:Number,
     actorId:Number,
@@ -45,7 +50,14 @@ export default {
         })
       }
     }
-  }
+  },
+  // watch:{
+  //   '$store.state.isDark':{
+  //     handler:function(newValue){
+  //       this.isDark = newValue
+  //     }
+  //   }
+  // }
 }
 </script>
 

@@ -161,9 +161,8 @@ export default {
     padding-bottom: 5rem;
     margin-top: -7.4rem;
     border-radius: 0.75rem;
-    background-color: #fff;
     backdrop-filter: saturate(600%) blur(30px);
-    background-color: #fffc!important;
+    background-color: var(--regular-background);
     box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1);
     display: flex;
     flex-flow: column nowrap;
@@ -191,7 +190,7 @@ export default {
         align-items: center;
         margin-top: 3rem;
         font-size: 1.8rem;
-        color: #344767;
+        color: var(--primary-text);
       }
       .recentlyMain{
         display: flex;

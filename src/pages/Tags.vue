@@ -146,7 +146,7 @@
                   <el-input prefix-icon="el-icon-search" size="medium" v-model="TagForm.tag"></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" size="medium" @click="submitForm('TagForm')">搜索</el-button>
+                  <el-button class="submitBtn" type="primary" size="medium" @click="submitForm('TagForm')">搜索</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -210,9 +210,8 @@ export default {
     padding-bottom: 5rem;
     margin-top: -7.4rem;
     border-radius: 0.75rem;
-    background-color: #fff;
     backdrop-filter: saturate(600%) blur(30px);
-    background-color: #fffc!important;
+    background-color: var(--regular-background);
     box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1);
     display: flex;
     flex-flow: column nowrap;
@@ -239,7 +238,7 @@ export default {
         align-items: center;
         margin-top: 3rem;
         font-size: 1.8rem;
-        color: #344767;
+        color: var(--primary-text);
       }
       .tagsMain{
         display: flex;
@@ -249,16 +248,19 @@ export default {
           width: 70%;
           margin: 3rem 0 0 0;
           border-radius: 0.75rem;
-          background-color: #fcfcfc;
+          background-color: var(--secondary-background);
           line-height: 1.8;
           .TagsTitle{
             display: block;
             margin-left: 1rem;
             margin-bottom: 1rem;
-            color: #344767;
+            color: var(--primary-text);
           }
           .tag{
             margin: 0.5rem;
+            border-radius: 0.5rem;
+            background-color: var(--btn-background);
+            color: #636e72;
           }
           .tag:hover{
             cursor: pointer;
@@ -270,14 +272,15 @@ export default {
         margin-top: 4rem;
         // padding: 2rem;
         border-color: #000000;
-        background-color: #fcfcfc;
+        background-color: var(--secondary-background);
         border-radius: 0.5rem;
         box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
         .TagSearchHeader{
           width: 100%;
           height: 50px;
           border-radius: 0.75rem 0.75rem 0 0;
-          background: linear-gradient(0deg,#f3f3f3,#eeeeee);
+          // background: linear-gradient(0deg,#f3f3f3,#eeeeee);
+          background-color: var(--primary-background);
           display: flex;
           flex-flow: row nowrap;
           align-items: center;
@@ -292,6 +295,13 @@ export default {
           display: flex;
           flex-flow: column nowrap;
           align-items: center;
+          /deep/.el-input__inner{
+            background-color: var(--regular-background);
+          }
+          .submitBtn{
+            background-color: var(--primary-color);
+            border: var(--primary-color);
+          }
         }
       }
     }

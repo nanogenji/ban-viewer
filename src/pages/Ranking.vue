@@ -35,7 +35,7 @@
                 value-format="yyyy-MM-dd"
                 size="small">
               </el-date-picker>
-              <el-button type="primary" style="width:60%" icon="el-icon-search" round @click="datePickBtn">确认搜索</el-button>
+              <el-button class="submitBtn" type="primary" style="width:60%" icon="el-icon-search" round @click="datePickBtn">确认搜索</el-button>
             </div>
           </el-aside>
           <el-main class="rankingMain" v-if="!this.rankingTotal && !isloading">
@@ -196,9 +196,8 @@ export default {
     padding-bottom: 5rem;
     margin-top: -7.4rem;
     border-radius: 0.75rem;
-    background-color: #fff;
     backdrop-filter: saturate(600%) blur(30px);
-    background-color: #fffc!important;
+    background-color: var(--regular-background);
     box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1);
     display: flex;
     flex-flow: column nowrap;
@@ -218,12 +217,15 @@ export default {
       display: flex;
       flex-flow: column nowrap;
       justify-content: space-between;
+      .rankingHeader{
+        color: var(--primary-text);
+      }
       .datePickerTitle{
         display: flex;
         justify-content: center;
         margin-top: 5rem;
         font-size: 1.5rem;
-        color: #344767;
+        color: var(--primary-text);
       }
       .datePicker{
         height: 150px;
@@ -233,7 +235,11 @@ export default {
         justify-content: space-between;
         align-items: center;
         /deep/.el-input__inner{
-          background-color: #fcfcfc;
+          background-color: var(--secondary-background);
+        }
+        .submitBtn{
+          background-color: var(--primary-color);
+          border: var(--primary-color);
         }
       }
       .rankingMain{
@@ -279,5 +285,14 @@ export default {
   }
   /deep/.el-pagination.is-background .el-pager li:not(.disabled):hover {
     color: #ffbebc;
+  }
+  /deep/.el-pagination.is-background .btn-next{
+    background-color: var(--btn-background);
+  }
+  /deep/.el-pagination.is-background .btn-prev{
+    background-color: var(--btn-background);
+  }
+  /deep/.el-pagination.is-background .el-pager li{
+    background-color: var(--btn-background);
   }
 </style>

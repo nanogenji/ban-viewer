@@ -1,5 +1,5 @@
 <template>
-  <div class="navi">
+  <div :class="{navi:true,dark:isDark,light:!isDark}">
     <div class='navbar'>
       <div class='brand' @click="toHome">BanViewer</div>
       <ul class="collapse">
@@ -51,6 +51,14 @@
           <a>关于</a>
         </li>
       </ul>
+      <div>
+        <a @click="switchTheme('default')">
+          <i v-show="!isDark" class="el-icon-sunny"></i>
+        </a>
+        <a @click="switchTheme('dark')">
+          <i v-show="isDark" class="el-icon-moon-night"></i>
+        </a>
+      </div>
       <button class="login" v-if="!this.btnFlag" @click="toLogin">登录账号</button>
       <button class="user" v-else @click="toProfile">{{this.username}}</button>
     </div>
@@ -63,7 +71,9 @@ export default {
   data(){
     return{
       btnFlag:false,
-      username:''
+      username:'',
+      isDark:false,
+      theme:'default'
     }
   },
   methods:{
@@ -143,9 +153,40 @@ export default {
         }
       });
     },
+    switchTheme(){
+      // if(mode === 'dark'){
+      //   this.theme = 'default'
+      //   localStorage.setItem('theme','default');
+      //   this.isdark = false
+      // }
+      // else{
+      //   this.theme = 'dark'
+      //   localStorage.setItem('theme','dark');
+      //   this.isdark = true
+      // }
+
+      // if(mode === 'dark'){
+      //   this.theme = 'light'
+      //   this.isdark = false
+      // }
+      // else{
+      //   this.theme = 'dark'
+      //   this.isdark = true
+      // }
+      this.$store.dispatch('getIsDark')
+    }
+  },
+  watch:{
+    '$store.state.isDark':{
+      handler:function(newValue){
+        this.isDark = newValue
+        console.log('vuex'+this.isDark)
+      }
+    }
   },
   created(){
     //注意类型转换，原类型为string
+    this.isDark = JSON.parse(localStorage.getItem('isDark'))
     this.btnFlag = JSON.parse(localStorage.getItem('isLogin'))
     this.username = localStorage.getItem('username')
   },
@@ -166,7 +207,9 @@ export default {
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    color: #344767;
+    // color: #344767;
+    color: var(--primary-text);
+    // background-color: var(--bgc);
     .navbar{
       height: 70%;
       width: 90%;
@@ -176,13 +219,14 @@ export default {
       align-items: center;
       border-radius: 0.5rem;
       backdrop-filter: saturate(200%) blur(30px);//与.dropdown-container的同属性互斥
-      background-color: #fffc!important;
+      // background-color: #fffc;
+      background-color: var(--regular-background);
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
       .brand{
         margin-left: 2rem;
         line-height: 100%;
         font-size: 1.2rem;
-        color: #344767;
+        color: var(--primary-text);
       }
       .brand:hover{
         cursor: pointer;
@@ -223,7 +267,7 @@ export default {
           list-style: none;
           border-radius: 0.5rem;
           // background-color: #fffc!important;
-          background-color: #fffefe;
+          background-color: var(--secondary-background);
           box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
           // backdrop-filter: saturate(200%) blur(30px);
           .dropdown{
@@ -236,7 +280,7 @@ export default {
               width: 80%;
               padding: 0.5rem;
               margin-top: 0.4rem;
-              color: #344767;
+              color: var(--primary-text);
               border-radius: 0.5rem;
             }
             .dropdown-item:hover{
@@ -250,7 +294,7 @@ export default {
         width: 8%;
         height: 70%;
         margin-right: 1rem;
-        background-color: #ff9ea6;
+        background-color: var(--primary-color);
         border: none;
         border-radius: 0.5rem;
         box-shadow: 0 2px 12px 0 rgb(255, 158, 166);
@@ -271,7 +315,7 @@ export default {
         box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
         font-weight: 700;
         font-size: 1rem;
-        color: #ff9ea6;
+        color: var(--primary-color);
       }
       .user:hover{
         cursor: pointer;

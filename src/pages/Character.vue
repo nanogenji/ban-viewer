@@ -100,7 +100,7 @@ export default {
   methods:{
     //侧栏css
     cellStyle(){
-      return 'background-color: #fcfcfc;'
+      return 'background-color: var(--secondary-background)'
     },
     handleTag(value){
       this.$router.push({
@@ -149,9 +149,8 @@ export default {
     padding-bottom: 5rem;
     margin-top: -7.4rem;
     border-radius: 0.75rem;
-    background-color: #fff;
     backdrop-filter: saturate(600%) blur(30px);
-    background-color: #fffc!important;
+    background-color: var(--regular-background);
     box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1);
     display: flex;
     flex-flow: column nowrap;
@@ -180,6 +179,7 @@ export default {
         margin-left: 80px;
         font-size: 26px;
         font-weight: 600;
+        color: var(--pure);
       }
     }
     .characterAside{
@@ -217,9 +217,7 @@ export default {
           width: 250px;
           min-width: 100px;
           // margin-left: 1rem;
-        }
-        /deep/.nicknameTable{
-          background-color: #fcfcfc;
+          background-color: var(--secondary-background)!important;
         }
       }
       .infoTable{
@@ -229,9 +227,8 @@ export default {
         margin-top: 1.5rem;
       }
       /deep/.infoTable{
-        background-color: #fcfcfc;
+        background-color: var(--secondary-background);
       }
-
     }
     .characterMain{
       padding-top: 2rem;
@@ -242,10 +239,11 @@ export default {
         width: 70%;
         margin: 1.5rem 0 2rem 5rem;
         border-radius: 0.75rem;
-        background-color: #fcfcfc;
+        background-color: var(--secondary-background);
         padding: 1rem 1.8rem 1rem 1.8rem;
         font-size: 15px;
         line-height: 1.8;
+        color: var(--primary-text);
       }
     }
   }

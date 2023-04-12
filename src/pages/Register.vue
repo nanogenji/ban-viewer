@@ -13,12 +13,12 @@
           <el-input type="password" v-model="registerForm.checkPass" maxlength=16 autocomplete="off" placeholder='请再次输入密码'></el-input>
         </el-form-item>
         <el-form-item style="margin:0">
-          <el-link type="primary" :underline="false" @click="toLogin">已有账号</el-link>
+          <el-link :underline="false" @click="toLogin">已有账号</el-link>
         </el-form-item>
         <el-checkbox v-model="isRead"><a @click="toAgreement">我已了解《社区指导原则》</a></el-checkbox>
         <el-form-item class="btnContainer">
-          <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
-          <el-button @click="resetForm('registerForm')">重置</el-button>
+          <el-button class="submitBtn" type="primary" @click="submitForm('registerForm')">注册</el-button>
+          <el-button class="resetBtn" @click="resetForm('registerForm')">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -170,9 +170,8 @@ export default {
     padding-bottom: 5rem;
     margin-top: -7.4rem;
     border-radius: 0.75rem;
-    background-color: #fff;
     backdrop-filter: saturate(600%) blur(30px);
-    background-color: #fffc!important;
+    background-color: var(--regular-background);
     box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1);
     display: flex;
     flex-flow: column nowrap;
@@ -185,7 +184,7 @@ export default {
       display: flex;
       flex-flow: column nowrap;
       // background-color: #f6f8fa;
-      background-color: #fcfcfc;
+      background-color: var(--secondary-background);
       box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
       justify-content:space-between;
       align-items: center;
@@ -193,6 +192,7 @@ export default {
       .registerTitle{
         margin-top: -5.5rem;
         font-size: 1.7rem;
+        color: var(--primary-text);
       }
       .registerForm{
         width: 84%;
@@ -200,6 +200,25 @@ export default {
         margin-bottom: 1.5rem;
         display: flex;
         flex-flow: column nowrap;
+        /deep/.el-input__inner{
+          background-color: var(--regular-background);
+        }
+        /deep/.el-link.el-link--default{
+          color: var(--primary-color);
+        }
+        /deep/.el-checkbox__input.is-checked+.el-checkbox__label{
+          color: var(--primary-color);
+        }
+        /deep/.el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+          background-color: var(--primary-color);
+          border: var(--primary-color);
+        }
+        /deep/.el-checkbox__inner{
+          background-color: var(--regular-background);
+        }
+        /deep/.el-checkbox__inner:hover{
+          border-color: var(--primary-color);
+        }
         .routeLink{
           margin: 0;
         }
@@ -214,7 +233,14 @@ export default {
         flex-flow: row nowrap;
         justify-content: space-around;
         align-items: center;
+        .submitBtn{
+          background-color: var(--primary-color);
+          border: var(--primary-color);
         }
+        .resetBtn{
+          background-color: var(--btn-background);
+        }
+      }
     }
   }
 </style>

@@ -171,14 +171,18 @@ export default {
       .date{
         height: 30px;
         font-size: 0.9rem;
+        color: var(--primary-text);
       }
       .tags{
         height: 25px;
         margin-bottom: 0.5rem;
         overflow: hidden;
+        color: var(--primary-text);
         .tag{
           margin-right: 0.6rem;
           margin-bottom: 0.1rem;
+          border-radius: 0.5rem;
+          background-color: var(--regular-background);
         }
         .tag:hover{
           cursor: pointer;

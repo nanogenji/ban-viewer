@@ -56,7 +56,7 @@ export default {
       padding-right: 0.5rem;
       border-radius: 0.5rem;
       backdrop-filter: saturate(200%) blur(30px);
-      background-color: #fffc!important;
+      background-color: var(regular-background);
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
       .weekbarItem{
         width: 12%;
@@ -66,7 +66,7 @@ export default {
         justify-content: center;
         list-style:none;
         cursor:pointer;
-        color: #344767;
+        color: var(--primary-text);
         border-radius: 999rem;
       }
       .weekbarItem:hover{

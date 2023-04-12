@@ -15,6 +15,12 @@ Vue.use(storage);
 
 moment.locale('en');
 Vue.prototype.$moment = moment;
+// if(localStorage.getItem('theme') === 'default'){
+//   import('../src/assets/css/theme/default.scss')
+// }
+// else{
+//   import('../src/assets/css/theme/dark.scss')
+// }
 new Vue({
   render: h => h(App),
   //全局事件总线
