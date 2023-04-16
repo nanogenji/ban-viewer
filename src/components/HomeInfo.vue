@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div class="title">
-      <a>BanViewer</a>
+      <h1 class="banviewer">BanViewer</h1>
     </div>
-    <div class="introduction">
+    <div class="introduction" v-show="$store.state.device === 'PC'">
       <!-- <a>Welcome to Bangumi, a website focus on movie, music,books, hlep you to find your friends. Hope you have fun.</a> -->
       <a>欢迎使用BanViewer，这是一个专注于影视，音乐，书籍信息的站点，致力于发现生活中有趣的作品。</a>
     </div>
@@ -44,8 +44,8 @@ export default {
 
 <style scoped lang='scss'>
   .container{
-    width: 50%;
-    // height: 380px;
+    // width: 50%;
+    height: 380px;
     min-height: 36%;
     margin-top: 6rem;
     display: flex;
@@ -55,12 +55,20 @@ export default {
     overflow: hidden;
     .title{
       font-size: 3rem;
-      font-weight: 500;
+      font-weight: 800;
       margin-top: 2rem;
       opacity: 0.8;
-      color: #263349;
+      letter-spacing: -3px;
+      // color: #263349;
+      .banviewer{
+        background: linear-gradient(135deg,#ec7785,#9ef3e9);
+        margin-bottom: 0;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
     }
     .introduction{
+      width: 60%;
       height: 25%;
       font-size: 1.3rem;
       margin-top: 1rem;
@@ -73,18 +81,18 @@ export default {
       height: 18%;
       background-color: rgba(255,255,255,0);
       border-radius: 999em;
-      margin-top: 2rem;
+      // margin-top: 2rem;
       position: relative;
       padding: 0.2rem;
       .search-content{
         width: 90%;
-        height: 100%;
+        height: 45px;
         border: none;
         outline-style: none;
         font-size: 1.2rem;
         border-radius: 999em;
         padding-left: 1rem;
-        background-color: rgba(255,255,255,0.2);
+        background-color: rgba(255,255,255,0.3);
         //光标
         caret-color:#fff;
         text-indent:0.6rem;
@@ -117,8 +125,21 @@ export default {
         transition: 0.2s;
       }
       .search-content:focus{
-      background-color: rgba(255,255,255,0.5)
+      background-color: rgba(255,255,255,0.6)
       }
     }
   }
+@media screen and (max-width:630px){
+  .container{
+    .title{
+      font-size: 2rem;
+    }
+    .introduction{
+      display: none;
+    }
+    .search{
+      width: 100%;
+    }
+  }
+}
 </style>

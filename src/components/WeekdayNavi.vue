@@ -70,15 +70,29 @@ export default {
         border-radius: 999rem;
       }
       .weekbarItem:hover{
-        color: #fff;
-        background-color: #ffbebc;
+        // color: #fff;
+        // background-color: #ffbebc;
+        color: var(--primary-color);;
+        background-color: var(--regular-color);
         transition-duration:0.2s;
       }
       .active{
-        color: #fff;
-        background-color: #ffbebc;
+        // color: #fff;
+        // background-color: #ffbebc;
+        color: var(--primary-color);
+        background-color: var(--regular-color);
         transition-duration:0.2s;
       }
     }
   }
+@media screen and (max-width:620px){
+  .week{
+    .weekbar{
+      .weekbarItem{
+        height: 90%;
+        text-align: center;
+      }
+    }
+  }
+}
 </style>

@@ -201,7 +201,7 @@ export default {
     position: fixed;
     height: 80px;
     width: 65%;
-    min-width: 690px;
+    // min-width: 690px;
     z-index: 999;
     display: flex;
     flex-flow: row nowrap;
@@ -209,7 +209,6 @@ export default {
     align-items: center;
     // color: #344767;
     color: var(--primary-text);
-    // background-color: var(--bgc);
     .navbar{
       height: 70%;
       width: 90%;
@@ -294,13 +293,16 @@ export default {
         width: 8%;
         height: 70%;
         margin-right: 1rem;
-        background-color: var(--primary-color);
+        background-color: var(--regular-color);
         border: none;
         border-radius: 0.5rem;
-        box-shadow: 0 2px 12px 0 rgb(255, 158, 166);
+        // box-shadow: 0 2px 12px 0 rgb(255, 158, 166);
+        box-shadow: 0 1px 12px 0 rgb(255, 208, 218);
         font-weight: 700;
         font-size: 0.9rem;
-        color: #fff;
+        // color: #fff;
+        color: var(--primary-color);
+        overflow: hidden;
       }
       .login:hover{
         cursor: pointer;
@@ -322,6 +324,38 @@ export default {
       }
     }
   }
+@media screen and (max-width:970px){
+  .navi{
+    width: 100%;
+    max-width: 620px;
+  }
+}
+@media screen and (max-width:630px){
+  .navi{
+    width: 100%;
+    min-width: 320px;
+    .navbar{
+      .brand{
+        display: none;
+      }
+    .collapse{
+      width: 90%;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-around;
+    }
+      .login{
+        display: none;
+      }
+      .user{
+        display: none;
+      }
+    }
+  }
+}
   @keyframes menu{
     from{opacity: 0}
     to{opacity: 1}

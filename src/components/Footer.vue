@@ -141,4 +141,27 @@ export default {
       color: var(--primary-text);
     }
   }
+  @media screen and (max-width:730px){
+  .footer{
+    .footerMain{
+      .footerInfo{
+
+        .brand{
+          display: none;
+        }
+        .icons{
+          display: none;
+        }
+      }
+      .footerCol{
+        .title{
+          font-size: 0.7rem;
+        }
+        .content{
+          font-size: 0.7rem;
+        }
+      }
+    }
+  }
+}
 </style>

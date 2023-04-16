@@ -333,6 +333,7 @@ export default {
       flex-flow: column nowrap;
       justify-content: flex-start;
       align-items: center;
+      overflow: hidden;
       .platform{
         width: 250px;
         margin-left: 6rem;

@@ -87,12 +87,10 @@ export default {
     axios.get('https://api.bgm.tv/calendar').then( //'http://localhost:8080/api/calendar'
       response => {
         this.items = response.data[0].items//默认星期数
-        console.log(this.items)
         for(let i = 0;i < 7;i++){
           for(let j = 0;j < response.data[i].items.length;j++){//部分item没有collection.doing属性
             if(!response.data[i].items[j].collection){
               response.data[i].items[j].collection = {doing:0}
-              console.log(response.data[i].items[j])
             }
           }
           response.data[i].items.sort(this.compare)//按doing人数排序
@@ -100,7 +98,6 @@ export default {
         // console.log(response.data)
         // console.log(response.data[0].items.sort(this.compare))
         this.totalData = response
-        console.log(this.totalData)
       },
       error => {
         this.apiError = error.message
@@ -115,6 +112,7 @@ export default {
   .Home{
     width: 75%;
     min-height: 1000px;
+    min-width: 350px;
     padding-bottom: 5rem;
     margin-top: -7.4rem;
     border-radius: 0.75rem;

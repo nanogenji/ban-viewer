@@ -345,7 +345,7 @@ export default {
           color: var(--primary-text);;
         }
         .el-menu-vertical-demo{
-          background-color: var(--regular-background);
+          background-color: var(--secondary-background);
           .el-menu-item{
             color: var(--primary-text);
           }

@@ -37,6 +37,15 @@ export default {
           root.style.setProperty('color-scheme', 'light');
         }
       }
+    },
+  },
+  beforeCreate(){
+    if((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+      console.log('mobile')
+      this.$store.dispatch('getDevice','mobile')
+    }else{
+      console.log('PC')
+      this.$store.dispatch('getDevice','PC')
     }
   },
   created() {
@@ -51,21 +60,29 @@ export default {
 } */
 .dark{
   --primary-color:#eb9199;
+  --regular-color:#ffecf1;
   --primary-background:#1a1a1a;
   --regular-background:#333;
   --secondary-background:#242424;
   --btn-background:#2f2f2f;
   --pure:#ffffff;
   --primary-text:#eee;
+  --gradient:linear-gradient(50deg,#ffd0dad7,#ffecf1d5);
+  --scrollbar-track-color:rgb(66, 66, 66);
+  --scrollbar-thumb-color:rgb(104, 104, 104);
 }
 .light{
   --primary-color:#ff9ea6;
+  --regular-color:#ffecf1;
   --primary-background:#f2f2f2;
   --regular-background:#fffc;
   --secondary-background:#fcfcfc;
   --btn-background:#f4f4f5;
   --pure:#000000;
   --primary-text:#344767;
+  --gradient:linear-gradient(50deg,#ffd0da,#ffecf1);
+  --scrollbar-track-color:rgb(241, 241, 241);
+  --scrollbar-thumb-color:rgb(193, 193, 193);
 }
 body{
   margin: 0px;
@@ -77,4 +94,23 @@ body{
   align-items: center;
   background-color: var(--primary-background);
 }
+/* html::-webkit-scrollbar {
+  width: 10px;
+}
+html::-webkit-scrollbar-track {
+  background: rgb(241, 241, 241);
+  border-radius: 10px;
+}
+html::-webkit-scrollbar-thumb {
+  background: rgb(193, 193, 193);
+  border-radius: 10px;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: rgb(168, 168, 168);
+  border-radius: 10px;
+}
+html::-webkit-scrollbar-thumb:active {
+  background-color: rgb(120, 120, 120);
+  border-radius: 10px;
+} */
 </style>

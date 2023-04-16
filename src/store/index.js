@@ -8,7 +8,8 @@ export default new Vuex.Store({
     currentWeekNumber:0,
     tag:'',
     username:'',
-    isDark:false
+    isDark:false,
+    device:'PC'
   },
   getters: {
   },
@@ -25,6 +26,14 @@ export default new Vuex.Store({
     GET_ISDARK(state){
       state.isDark = !state.isDark
       localStorage.setItem('isDark',state.isDark)
+    },
+    GET_DIVICE(state,value){
+      if(value === 'mobile'){
+        state.device = 'mobile'
+      }
+      else{
+        state.device = 'PC'
+      }
     }
   },
   actions: {
@@ -44,6 +53,9 @@ export default new Vuex.Store({
     },
     getIsDark(context){
       context.commit('GET_ISDARK')
+    },
+    getDevice(context,value){
+      context.commit('GET_DIVICE',value)
     }
   },
   modules: {
