@@ -29,7 +29,7 @@ export default new Vuex.Store({
     },
     GET_DIVICE(state,value){
       if(value === 'mobile'){
-        state.device = 'mobile'
+        state.device = 'Mobile'
       }
       else{
         state.device = 'PC'

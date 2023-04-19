@@ -13,6 +13,14 @@ import Character from '../pages/Character'
 import Person from '../pages/Person'
 import Tags from '../pages/Tags'
 import About from '../pages/About'
+import mDetail from '../pages/mobile/mDetail'
+import mSearchResult from '../pages/mobile/mSearchResult'
+import mRanking from '../pages/mobile/mRanking'
+import mTags from '../pages/mobile/mTags'
+import mRecently from '../pages/mobile/mRecently'
+import mCharacter from '../pages/mobile/mCharacter'
+import mPerson from '../pages/mobile/mPerson'
+import mSearch from '../pages/mobile/mSearch'
 export default new VueRouter({
   routes:[
     {
@@ -115,6 +123,62 @@ export default new VueRouter({
       path:'/',
       redirect:'/home',
     },
+    {
+      path:'/mdetail',
+      component:mDetail,
+      meta:{
+        scrollToMobile:true
+      }
+    },
+    {
+      path:'/msearchresult',
+      component:mSearchResult,
+      meta:{
+        scrollToMobile:true
+      }
+    },
+    {
+      path:'/mranking',
+      component:mRanking,
+      meta:{
+        scrollToMobile:true
+      }
+    },
+    {
+      path:'/mtags',
+      component:mTags,
+      meta:{
+        scrollToMobile:true
+      }
+    },
+    {
+      path:'/mrecently',
+      component:mRecently,
+      meta:{
+        scrollToMobile:true
+      }
+    },
+    {
+      path:'/mcharacter',
+      component:mCharacter,
+      meta:{
+        scrollToMobile:true
+      }
+    },
+    {
+      path:'/mperson',
+      component:mPerson,
+      meta:{
+        scrollToMobile:true
+      }
+    },
+    {
+      path:'/msearch',
+      component:mSearch,
+      meta:{
+        scrollToMobile:true
+      }
+    }
   ],
   scrollBehavior(to, from, savedPosition){
     if (savedPosition) {//返回之前的原位置
@@ -136,6 +200,11 @@ export default new VueRouter({
       if (to.matched.some(m => m.meta.scrollToTop) && to.path !== from.path) {
         position.x = 0
         position.y = 0
+        position.behavior = "smooth"
+      }
+      if (to.matched.some(m => m.meta.scrollToMobile) && to.path !== from.path) {
+        position.x = 0
+        position.y = 280
         position.behavior = "smooth"
       }
      //如果返回一个 falsy (假的值)，或者是一个空对象，那么不会发生滚动。

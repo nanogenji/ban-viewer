@@ -172,4 +172,9 @@ export default {
       // flex: auto;
     }
   }
+@media screen and (max-width:630px){
+  .Home{
+    width: 92%;
+  }
+}
 </style>

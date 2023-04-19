@@ -19,7 +19,7 @@
     <div class="title">
       <a>{{name}}</a>
     </div>
-    <div class="doing">
+    <div class="doing" v-show="this.$store.state.device === 'PC'">
       <!-- 部分item没有doing属性 -->
       <a v-if="collection.doing!==0">{{collection.doing}}人在看</a>
       <a v-else>暂时没人在看哦</a>
@@ -43,12 +43,22 @@ export default {
   },
   methods:{
     toDetail(){
-      this.$router.push({
-        path:'detail',
-        query:{
-          id:this.id
-        }
-      })
+      if(this.$store.state.device === 'Mobile'){
+        this.$router.push({
+          path:'mdetail',
+          query:{
+            id:this.id
+          }
+        })
+      }
+      else{
+        this.$router.push({
+          path:'detail',
+          query:{
+            id:this.id
+          }
+        })
+      }
     }
   },
 }
@@ -113,4 +123,9 @@ export default {
       color: #7b809a;
     }
   }
+@media screen and (max-width:630px){
+  .cardItem{
+    margin-top: 2rem;
+  }
+}
 </style>

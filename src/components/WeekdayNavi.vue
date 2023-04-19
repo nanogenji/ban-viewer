@@ -1,6 +1,7 @@
 <template>
   <div class="week">
-    <ul class="weekbar">
+    <!-- pc -->
+    <ul class="weekbar" v-if="$store.state.device === 'PC'">
       <li @click="weekNumber(0)" :class="this.current == 0?'active weekbarItem':'weekbarItem'">星期日</li>
       <li @click="weekNumber(1)" :class="this.current == 1?'active weekbarItem':'weekbarItem'">星期一</li>
       <li @click="weekNumber(2)" :class="this.current == 2?'active weekbarItem':'weekbarItem'">星期二</li>
@@ -8,6 +9,16 @@
       <li @click="weekNumber(4)" :class="this.current == 4?'active weekbarItem':'weekbarItem'">星期四</li>
       <li @click="weekNumber(5)" :class="this.current == 5?'active weekbarItem':'weekbarItem'">星期五</li>
       <li @click="weekNumber(6)" :class="this.current == 6?'active weekbarItem':'weekbarItem'">星期六</li>
+    </ul>
+    <!-- mobile -->
+    <ul class="weekbar" v-if="$store.state.device === 'Mobile'">
+      <li @click="weekNumber(0)" :class="this.current == 0?'active weekbarItem':'weekbarItem'">周日</li>
+      <li @click="weekNumber(1)" :class="this.current == 1?'active weekbarItem':'weekbarItem'">周一</li>
+      <li @click="weekNumber(2)" :class="this.current == 2?'active weekbarItem':'weekbarItem'">周二</li>
+      <li @click="weekNumber(3)" :class="this.current == 3?'active weekbarItem':'weekbarItem'">周三</li>
+      <li @click="weekNumber(4)" :class="this.current == 4?'active weekbarItem':'weekbarItem'">周四</li>
+      <li @click="weekNumber(5)" :class="this.current == 5?'active weekbarItem':'weekbarItem'">周五</li>
+      <li @click="weekNumber(6)" :class="this.current == 6?'active weekbarItem':'weekbarItem'">周六</li>
     </ul>
   </div>
 </template>
@@ -87,6 +98,8 @@ export default {
   }
 @media screen and (max-width:620px){
   .week{
+    width: 90%;
+    height: 100px;
     .weekbar{
       .weekbarItem{
         height: 90%;

@@ -7,6 +7,9 @@ import router from './router';
 import 'element-ui/lib/theme-chalk/index.css';
 import storage from './utils/localstorage';
 import store from './store'
+import { VueHammer } from 'vue2-hammer'
+import './assets/css/element-variables.scss'
+Vue.use(VueHammer)
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);

@@ -33,21 +33,43 @@ export default {
   },
   methods:{
     toCharacter(){
-      this.$router.push({
-        path:'character',
-        query:{
-          id:this.id
-        }
-      })
+      if(this.$store.state.device === 'Mobile'){
+        this.$router.push({
+          path:'mcharacter',
+          query:{
+            id:this.id
+          }
+        })
+      }
+      else{
+        this.$router.push({
+          path:'character',
+          query:{
+            id:this.id
+          }
+        })
+      }
+
     },
     toPerson(){
       if(this.actorId){
-        this.$router.push({
-          path:'person',
-          query:{
-            actorId:this.actorId
-          }
-        })
+        if(this.$store.state.device === 'Mobile'){
+          this.$router.push({
+            path:'mperson',
+            query:{
+              actorId:this.actorId
+            }
+          })
+        }
+        else{
+          this.$router.push({
+            path:'person',
+            query:{
+              actorId:this.actorId
+            }
+          })
+        }
+
       }
     }
   },

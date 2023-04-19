@@ -6,7 +6,7 @@
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive" />
     <Footer></Footer>
-    <el-backtop :bottom="80" :right='80'></el-backtop>
+    <el-backtop v-if="$store.state.device === 'PC'" :bottom="80" :right='80'></el-backtop>
   </div>
 </template>
 
@@ -40,11 +40,11 @@ export default {
     },
   },
   beforeCreate(){
-    if((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
-      console.log('mobile')
+    if(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
+      // console.log('mobile')
       this.$store.dispatch('getDevice','mobile')
     }else{
-      console.log('PC')
+      // console.log('PC')
       this.$store.dispatch('getDevice','PC')
     }
   },
@@ -67,6 +67,7 @@ export default {
   --btn-background:#2f2f2f;
   --pure:#ffffff;
   --primary-text:#eee;
+  --regular-text:#909399;
   --gradient:linear-gradient(50deg,#ffd0dad7,#ffecf1d5);
   --scrollbar-track-color:rgb(66, 66, 66);
   --scrollbar-thumb-color:rgb(104, 104, 104);
@@ -80,6 +81,7 @@ export default {
   --btn-background:#f4f4f5;
   --pure:#000000;
   --primary-text:#344767;
+  --regular-text:#909399;
   --gradient:linear-gradient(50deg,#ffd0da,#ffecf1);
   --scrollbar-track-color:rgb(241, 241, 241);
   --scrollbar-thumb-color:rgb(193, 193, 193);

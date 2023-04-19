@@ -1,6 +1,7 @@
 <template>
   <div :class="{navi:true,dark:isDark,light:!isDark}">
-    <div class='navbar'>
+    <!-- PC -->
+    <div class='navbar' v-if="$store.state.device === 'PC'">
       <div class='brand' @click="toHome">BanViewer</div>
       <ul class="collapse">
         <li class="collapse-item">
@@ -62,6 +63,66 @@
       <button class="login" v-if="!this.btnFlag" @click="toLogin">登录账号</button>
       <button class="user" v-else @click="toProfile">{{this.username}}</button>
     </div>
+    <!-- mobile -->
+    <div class="navbar-mobile" v-if="$store.state.device === 'Mobile'">
+      <div class="navbar-title-mobile">
+        <div class='brand-mobile' @click="toHome">BanViewer</div>
+        <button class="menuBtn-mobile" v-hammer:tap="showList">
+          <i class="el-icon-menu" v-show="!this.isShowList"></i>
+          <i class="el-icon-close" v-show="this.isShowList"></i>
+        </button>
+      </div>
+      <el-collapse-transition>
+      <div class="menu-mobile" v-show="this.isShowList">
+        <div class="menu-col">
+          <ul class="menu-col-list" v-hammer:tap="showListAnime">
+            <a>影视</a>
+            <el-collapse-transition>
+              <div v-show="this.isShowAnime">
+                <li class="menu-dropdown" v-hammer:tap="(event)=> tomRanking(2)"><i class="el-icon-trophy"></i><a style="marginLeft:12px">Top50</a></li>
+                <li class="menu-dropdown" v-hammer:tap="(event)=> tomRecently(2)"><i class="el-icon-time"></i><a style="marginLeft:10px">近期新作</a></li>
+                <li class="menu-dropdown" v-hammer:tap="tomTags"><i class="el-icon-guide"></i><a style="marginLeft:10px">热门标签</a></li>
+                <li class="menu-dropdown" v-hammer:tap="(event)=> toViewAll(2)"><i class="el-icon-files"></i><a style="marginLeft:10px">查看全部</a></li>
+              </div>
+            </el-collapse-transition>
+          </ul>
+          <ul class="menu-col-list" v-hammer:tap="showListMusic">
+            <a>音乐</a>
+            <el-collapse-transition>
+              <div v-show="this.isShowMusic">
+                <li class="menu-dropdown" v-hammer:tap="(event)=> tomRanking(3)"><i class="el-icon-trophy"></i><a style="marginLeft:12px">Top50</a></li>
+                <li class="menu-dropdown" v-hammer:tap="(event)=> tomRecently(3)"><i class="el-icon-time"></i><a style="marginLeft:10px">近期新作</a></li>
+                <li class="menu-dropdown" v-hammer:tap="tomTags"><i class="el-icon-guide"></i><a style="marginLeft:10px">热门标签</a></li>
+                <li class="menu-dropdown" v-hammer:tap="(event)=> toViewAll(3)"><i class="el-icon-files"></i><a style="marginLeft:10px">查看全部</a></li>
+              </div>
+            </el-collapse-transition>
+          </ul>
+          <ul class="menu-col-list" v-hammer:tap="showListBook">
+            <a>图书</a>
+            <el-collapse-transition>
+              <div v-show="this.isShowBook">
+                <li class="menu-dropdown" v-hammer:tap="(event)=> tomRanking(1)"><i class="el-icon-trophy"></i><a style="marginLeft:12px">Top50</a></li>
+                <li class="menu-dropdown" v-hammer:tap="(event)=> tomRecently(1)"><i class="el-icon-time"></i><a style="marginLeft:10px">近期新作</a></li>
+                <li class="menu-dropdown" v-hammer:tap="tomTags"><i class="el-icon-guide"></i><a style="marginLeft:10px">热门标签</a></li>
+                <li class="menu-dropdown" v-hammer:tap="(event)=> toViewAll(1)"><i class="el-icon-files"></i><a style="marginLeft:10px">查看全部</a></li>
+              </div>
+            </el-collapse-transition>
+          </ul>
+          <ul class="menu-col-list" v-hammer:tap="showListGame">
+            <a>游戏</a>
+            <el-collapse-transition>
+              <div v-show="this.isShowGame">
+                <li class="menu-dropdown" v-hammer:tap="(event)=> tomRanking(4)"><i class="el-icon-trophy"></i><a style="marginLeft:12px">Top50</a></li>
+                <li class="menu-dropdown" v-hammer:tap="(event)=> tomRecently(4)"><i class="el-icon-time"></i><a style="marginLeft:10px">近期新作</a></li>
+                <li class="menu-dropdown" v-hammer:tap="tomTags"><i class="el-icon-guide"></i><a style="marginLeft:10px">热门标签</a></li>
+                <li class="menu-dropdown" v-hammer:tap="(event)=> toViewAll(4)"><i class="el-icon-files"></i><a style="marginLeft:10px">查看全部</a></li>
+              </div>
+            </el-collapse-transition>
+          </ul>
+        </div>
+      </div>
+      </el-collapse-transition>
+    </div>
   </div>
 </template>
 
@@ -73,7 +134,12 @@ export default {
       btnFlag:false,
       username:'',
       isDark:false,
-      theme:'default'
+      theme:'default',
+      isShowList:false,
+      isShowAnime:false,
+      isShowMusic:false,
+      isShowBook:false,
+      isShowGame:false
     }
   },
   methods:{
@@ -120,12 +186,24 @@ export default {
       })
     },
     toViewAll(type){
-      this.$router.push({
-        path:'/searchresult',
-        query:{
-          type
-        }
-      })
+      if(this.$store.state.device === 'Mobile'){
+        this.$router.push({
+          path:'/msearchresult',
+          query:{
+            type
+          }
+        })
+        this.isShowList = false
+      }
+      else{
+        this.$router.push({
+          path:'/searchresult',
+          query:{
+            type
+          }
+        })
+      }
+
     },
     toAbout(){
       this.$router.push({
@@ -174,6 +252,62 @@ export default {
       //   this.isdark = true
       // }
       this.$store.dispatch('getIsDark')
+    },
+    // mobile
+    showList(){
+      this.isShowList = !this.isShowList
+      this.isShowAnime = false,
+      this.isShowMusic = false,
+      this.isShowBook = false,
+      this.isShowGame = false
+    },
+    showListAnime(){
+      this.isShowAnime = !this.isShowAnime
+      this.isShowMusic = false,
+      this.isShowBook = false,
+      this.isShowGame = false
+    },
+    showListMusic(){
+      this.isShowMusic = !this.isShowMusic
+      this.isShowAnime = false,
+      this.isShowBook = false,
+      this.isShowGame = false
+    },
+    showListBook(){
+      this.isShowBook = !this.isShowBook
+      this.isShowAnime = false,
+      this.isShowMusic = false,
+      this.isShowGame = false
+    },
+    showListGame(){
+      this.isShowGame = !this.isShowGame
+      this.isShowAnime = false,
+      this.isShowMusic = false,
+      this.isShowBook = false
+    },
+    tomRanking(type){
+      this.$router.push({
+        path:'/mranking',
+        query:{
+          type
+        }
+      })
+      this.isShowList = false
+    },
+    tomTags(){
+      this.$router.push({
+        path:'/mtags',
+      })
+      this.isShowList = false
+    },
+    tomRecently(type){
+      this.$router.push({
+        path:'/mrecently',
+        query:{
+          type
+        }
+      })
+      this.isShowList = false
     }
   },
   watch:{
@@ -199,7 +333,8 @@ export default {
 <style scoped lang='scss'>
   .navi{
     position: fixed;
-    height: 80px;
+    // height: 80px;
+    min-height: 56px;
     width: 65%;
     // min-width: 690px;
     z-index: 999;
@@ -210,8 +345,10 @@ export default {
     // color: #344767;
     color: var(--primary-text);
     .navbar{
-      height: 70%;
+      // height: 70%;
+      height: 56px;
       width: 90%;
+      margin-top: 12px;
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-evenly;
@@ -359,5 +496,61 @@ export default {
   @keyframes menu{
     from{opacity: 0}
     to{opacity: 1}
+  }
+</style>
+<style lang="scss" scoped>
+  .navbar-mobile{
+    min-height: 56px;
+    width: 90%;
+    margin-top: 12px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 0.5rem;
+    backdrop-filter: saturate(200%) blur(30px);//与.dropdown-container的同属性互斥
+    background-color: var(--regular-background);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    .navbar-title-mobile{
+      width: 100%;
+      height: 56px;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      .brand-mobile{
+        margin-left: 2rem;
+        line-height: 100%;
+        font-size: 1.2rem;
+        color: var(--primary-text);
+      }
+      .brand-mobile:hover{
+        cursor: pointer;
+      }
+      .menuBtn-mobile{
+        width: 50px;
+        height: 70%;
+        margin-right: 1rem;
+        background-color: var(--regular-color);
+        border: none;
+        border-radius: 0.5rem;
+        // box-shadow: 0 2px 12px 0 rgb(255, 158, 166);
+        box-shadow: 0 1px 12px 0 rgb(255, 208, 218);
+        font-weight: 700;
+        font-size: 1.4rem;
+        // color: #fff;
+        color: var(--primary-color);
+        overflow: hidden;
+      }
+    }
+    .menu-mobile{
+      .menu-col{
+        .menu-dropdown{
+          padding: 5px 2px;
+          list-style: none;
+          color: var(--regular-text);
+        }
+      }
+    }
   }
 </style>

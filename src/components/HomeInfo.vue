@@ -25,6 +25,20 @@ export default {
   },
   methods:{
     toSearch(){
+      if(this.$store.state.device === 'Mobile'){
+        if(this.inputValue !== this.oldInputValue || this.$route.path === '/home'){
+            this.$router.push({
+            path:'msearchresult',
+            query:{
+              inputValue:this.inputValue
+            }
+          })
+          this.oldInputValue = this.inputValue//判断搜索词是否变化
+        }
+        else{
+          return false
+        }
+      }
       if(this.inputValue !== this.oldInputValue || this.$route.path === '/home'){
           this.$router.push({
           path:'searchresult',
@@ -129,9 +143,32 @@ export default {
       }
     }
   }
+@media screen and (min-width:630px) and (max-width: 1550px){
+  .container{
+    width: 80%;
+    height: 200px;
+    justify-content: flex-start;
+    .title{
+      margin-top: 0rem;
+      font-size: 2rem;
+    }
+    .search{
+      width: 70%;
+    }
+  }
+}
+@media screen and (max-width: 920px){
+  .container{
+    .introduction{
+      display: none;
+    }
+  }
+}
 @media screen and (max-width:630px){
   .container{
+    justify-content: flex-start;
     .title{
+      margin-top: 0rem;
       font-size: 2rem;
     }
     .introduction{
