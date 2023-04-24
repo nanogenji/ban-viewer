@@ -111,6 +111,16 @@ export default {
       })
     }
   },
+  beforeCreate(){
+    if(this.$store.state.device === 'Mobile'){
+      this.$router.push({
+        path:'mcharacter',
+        query:{
+          id:this.$route.query.id
+        }
+      })
+    }
+  },
   //真实请求
   created(){
     //剧集信息

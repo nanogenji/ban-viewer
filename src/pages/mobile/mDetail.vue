@@ -83,24 +83,32 @@
         </div>
         <div class="notfound" v-show="notfound"><a>未找到播放源</a></div>
       </div>
-      <el-card class="box-card summary">
-        <a v-if="item.summary" style="padding:1rem 1.1rem 1rem 1.1rem;display:block;">{{item.summary}}</a>
+      <el-card class="summary">
+        <a v-if="item.summary" style="padding:1rem 1.1rem 1rem 1.1rem;display:block;">{{sliceStr}}</a>
         <a v-else>暂无剧集简介...</a>
+        <el-button size="mini" type="text" @click="textToggle" class="Toggle" v-if="textToggleBtn">
+          {{ isTextToggle?'收起':'展开' }}
+          <i class="el-icon--right " :class="isTextToggle?'el-icon-arrow-up':'el-icon-arrow-down' " />
+        </el-button>
       </el-card>
       <el-card class="tagContainer">
         <a class="tagTitle" v-if="item.tags.length > 0">大家把{{item.name_cn?item.name_cn:item.name}}标注为：</a>
         <a class="tagTitle" v-else>该作品还没有标签</a>
-        <el-tag class="tag" v-for='tag in item.tags' :key="tag.id" type="info" v-hammer:tap="(event)=>handleTag(tag.name)" size="mini">
+        <el-tag class="tag" v-for='tag in sliceTag' :key="tag.id" type="info" v-hammer:tap="(event)=>handleTag(tag.name)" size="mini">
           <a class="tagName">{{tag.name}}</a>
           <a class="tagCount">{{tag.count}}</a>
           </el-tag>
+        <el-button size="mini" type="text" @click="tagToggle" class="Toggle" v-if="tagToggleBtn">
+          {{ isTagToggle?'收起':'展开' }}
+          <i class="el-icon--right " :class="isTagToggle?'el-icon-arrow-up':'el-icon-arrow-down' " />
+        </el-button>
       </el-card>
       <el-card class="charactersContainer">
         <a class="charactersTitle">角色介绍</a>
         <!-- 部分作品未收录角色信息 -->
         <div v-if='characters.length>0' class="charactersContent">
           <!-- cv信息可能不全 -->
-          <CharacterCard v-for='character in characters' :key='character.id'
+          <CharacterCard v-for='character in sliceCha' :key='character.id'
             :id='character.id'
             :actor="character.actors[0]?character.actors[0].name:''"
             :actorId='character.actors[0]?character.actors[0].id:0'
@@ -108,6 +116,10 @@
             :name='character.name'
             :relation='character.relation'
           />
+          <el-button size="mini" type="text" @click="chaToggle" class="Toggle" v-if="chaToggleBtn">
+            {{ isChaToggle?'收起':'展开' }}
+            <i class="el-icon--right " :class="isChaToggle?'el-icon-arrow-up':'el-icon-arrow-down' " />
+          </el-button>
         </div>
         <div v-else class="charactersContent">
           暂无相关角色信息
@@ -143,13 +155,23 @@ export default {
       acfunsrc:'',
       wetvsrc:'',
       iqiyisrc:'',
-      youkusrc:''
+      youkusrc:'',
+      isTextToggle:false,
+      textToggleBtn:false,
+      textMax:120,
+      isTagToggle:false,
+      tagToggleBtn:false,
+      tagMax:8,
+      isChaToggle:false,
+      chaToggleBtn:false,
+      chaMax:8
     }
   },
   components:{
     CharacterCard
   },
   methods:{
+    //查找播放源
     findPlayer(){
       this.findPlayerLoading = true
       axios.get(`https://cdn.jsdelivr.net/gh/ekibot/bangumi-onair/onair/${Math.floor(this.item.id/1000)}/${this.item.id}.json`).then(
@@ -219,6 +241,69 @@ export default {
           tagValue:value
         }
       })
+    },
+    textToggle(){
+      this.isTextToggle = !this.isTextToggle
+      this.isTextToggle === false ? (this.textMax = 120):(this.textMax = 99999)
+    },
+    tagToggle(){
+      this.isTagToggle = !this.isTagToggle
+      this.isTagToggle === false ? (this.tagMax = 8):(this.tagMax = 99999)
+    },
+    chaToggle(){
+      this.isChaToggle = !this.isChaToggle
+      this.isChaToggle === false ? (this.chaMax = 8):(this.chaMax = 99999)
+    }
+  },
+  computed:{
+    sliceStr(){
+      if(this.item.summary === '' || this.item.summary === undefined){
+        return this.item.summary
+      }
+      else{
+        if(this.item.summary.length > this.textMax){
+          return this.item.summary.substring(0,this.textMax) + '...'
+        }
+        else{
+        }
+      }
+      return this.item.summary
+    },
+    sliceTag(){
+      if(this.item.tags === '' || this.item.tags === undefined){
+        return this.item.tags
+      }
+      else{
+        if(this.item.tags.length > this.tagMax){
+          return this.item.tags.slice(0,this.tagMax)
+        }
+        else{
+        }
+      }
+      return this.item.tags
+    },
+    sliceCha(){
+      if(this.characters === '' || this.characters === undefined){
+        return this.characters
+      }
+      else{
+        if(this.characters.length > this.chaMax){
+          return this.characters.slice(0,this.chaMax)
+        }
+        else{
+        }
+      }
+      return this.characters
+    },
+  },
+  beforeCreate(){
+    if(this.$store.state.device === 'PC'){
+      this.$router.push({
+        path:'detail',
+        query:{
+          id:this.$route.query.id
+        }
+      })
     }
   },
   created(){
@@ -239,6 +324,13 @@ export default {
         for(let i=0;i<this.item.tags.length;i++){
           this.item.tags[i].id = nanoid(8)
         }
+        //展开btn是否显示
+        if(this.item.summary.length > this.textMax){
+          this.textToggleBtn = true
+        }
+        if(this.item.tags.length > this.tagMax){
+          this.tagToggleBtn = true
+        }
       },
       error => {
         this.apiError = true
@@ -250,7 +342,10 @@ export default {
     axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}/characters`).then(
       response => {
         this.characters = response.data
-        this.characters = this.characters.slice(0,41)//长篇作品人物过多，限制41
+        this.characters = this.characters.slice(0,42)//长篇作品人物过多，限制42
+        if(this.characters.length > this.chaMax){
+          this.chaToggleBtn = true
+        }
       },
       error => {
         console.log(error.message)
@@ -386,11 +481,16 @@ export default {
       }
       .summary{
         width: 85%;
+        // height: 150px;
+        overflow: hidden;
         margin-top: 1.5rem;
         border-radius: 0.75rem;
         background-color: var(--secondary-background);
         line-height: 1.5;
         color: var(--primary-text);
+        .Toggle{
+          width: 100%;
+        }
       }
       .tagContainer{
         width: 85%;
@@ -398,6 +498,9 @@ export default {
         border-radius: 0.75rem;
         // background-color: #fafafa;
         background-color: var(--secondary-background);
+        .Toggle{
+          width: 100%;
+        }
         .tagTitle{
           display: block;
           margin-bottom: 0.6rem;
@@ -435,7 +538,10 @@ export default {
           width: 100%;
           display: flex;
           flex-flow: row wrap;
-          justify-content: flex-start;
+          justify-content: space-around;
+        }
+        .Toggle{
+          width: 100%;
         }
       }
     }

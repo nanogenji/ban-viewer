@@ -247,6 +247,16 @@ export default {
       })
     }
   },
+  beforeCreate(){
+    if(this.$store.state.device === 'Mobile'){
+      this.$router.push({
+        path:'mdetail',
+        query:{
+          id:this.$route.query.id
+        }
+      })
+    }
+  },
   created(){
     this.isDark = JSON.parse(localStorage.getItem('isDark'))
     //剧集信息

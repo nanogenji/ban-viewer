@@ -98,6 +98,16 @@ export default {
       return 'background-color: var(--secondary-background)'
     }
   },
+  beforeCreate(){
+    if(this.$store.state.device === 'PC'){
+      this.$router.push({
+        path:'person',
+        query:{
+          actorId:this.$route.query.actorId
+        }
+      })
+    }
+  },
   created(){
     //剧集信息
     axios.get(`https://api.bgm.tv/v0/persons/${this.$route.query.actorId}`).then(

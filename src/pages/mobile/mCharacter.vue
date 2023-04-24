@@ -98,6 +98,16 @@ export default {
       return 'background-color: var(--secondary-background)'
     }
   },
+  beforeCreate(){
+    if(this.$store.state.device === 'PC'){
+      this.$router.push({
+        path:'character',
+        query:{
+          id:this.$route.query.id
+        }
+      })
+    }
+  },
   created(){
     //剧集信息
     axios.get(`https://api.bgm.tv/v0/characters/${this.$route.query.id}`).then(
@@ -185,6 +195,7 @@ export default {
         color: #999999;
       }
       .imgContainer{
+        max-width: 85%;
         /deep/.el-image__inner.el-image__preview {
           border-radius: 0.5rem;
         }

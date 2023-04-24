@@ -91,6 +91,7 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
+  // justify-content: space-around;
   //样式穿透，使头像填充整个容器
   /deep/.chaAva>img{
     display: block;
@@ -114,6 +115,11 @@ export default {
     .active:hover{
       cursor: pointer;
     }
+  }
+}
+@media screen and(max-width: 420px){
+  .chaContainer{
+  width: 120px;
   }
 }
 </style>>
