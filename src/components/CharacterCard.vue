@@ -1,6 +1,10 @@
 <template>
   <div class="chaContainer">
-    <el-avatar class="chaAva" shape="square" :size="'large'" :src="img" :fit="'cover'"></el-avatar>
+    <el-image class="chaAva" shape="square" :size="'large'" :src="img" :fit="'contain'" :preview-src-list="[img]">
+      <div slot="error" class="imageSlot">
+        <i class="el-icon-user"></i>
+      </div>
+    </el-image>
     <div class="Info">
       <div class="chaInfo">
         <a class="chaKey">{{relation}}</a>
@@ -91,8 +95,23 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
+  align-items: center;
   // justify-content: space-around;
   //样式穿透，使头像填充整个容器
+  .chaAva{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    .imageSlot{
+      height: 20px;
+      color: #909399;
+      .el-icon-user{
+      font-size: 1.5rem;
+      }
+    }
+  }
   /deep/.chaAva>img{
     display: block;
     // height: 100%;

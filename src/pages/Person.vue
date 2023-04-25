@@ -75,6 +75,25 @@
               <a v-if="item.summary">{{item.summary}}</a>
               <a v-else>暂无角色简介...</a>
             </el-card>
+            <el-card class="relationsContainer">
+              <a class="relationsTitle">参演条目</a>
+              <div v-if='relations.length>0' class="relationsContent">
+                <GridCard v-for='relation in sliceRelation' :key='relation.id'
+                  :id='relation.id'
+                  :img='relation.image'
+                  :name='relation.name'
+                  :name_cn='relation.name_cn'
+                  :relation='relation.relation'
+                />
+                <el-button size="mini" type="text" @click="relationToggle" class="Toggle" v-if="relationToggleBtn">
+                  {{isRelationToggle?'收起':'展开'}}
+                  <i class="el-icon--right" :class="isRelationToggle?'el-icon-arrow-up':'el-icon-arrow-down' " />
+                </el-button>
+              </div>
+              <div v-else class="relationsContent">
+                暂无相关条目信息
+              </div>
+            </el-card>
           </el-main>
         </el-container>
       </el-container>
@@ -84,17 +103,25 @@
 
 <script>
 import axios from 'axios'
+import GridCard from '../components/GridCard'
 export default {
   name:'Person',
   data(){
     return {
       item:[],
       infoList:[],
+      relations:[],
       nickname:[],
       name_cn:'',
       apiError:false,
-      errorMsg:''
+      errorMsg:'',
+      isRelationToggle:false,
+      relationToggleBtn:false,
+      relationMax:16
     }
+  },
+  components:{
+    GridCard
   },
   methods:{
     //侧栏css
@@ -108,6 +135,21 @@ export default {
           tagValue:value
         }
       })
+    },
+    relationToggle(){
+      this.isRelationToggle = !this.isRelationToggle
+      this.isRelationToggle === false ? this.relationMax = 16 : this.relationMax = 99999
+    }
+  },
+  computed:{
+    sliceRelation(){
+      if(this.relations === '' || this.relations === undefined){
+        return this.relations
+      }
+      else if(this.relations.length > this.relationMax){
+        return this.relations.slice(0,this.relationMax)
+      }
+      return this.relations
     }
   },
   beforeCreate(){
@@ -144,6 +186,17 @@ export default {
         this.apiError = true
         this.errorMsg = error.message
         console.log(error.messgae)
+      }
+    )
+    axios.get(`https://api.bgm.tv/v0/persons/${this.$route.query.actorId}/subjects`).then(
+      response => {
+        this.relations = response.data
+        if(this.relations.length > this.relationMax){
+          this.relationToggleBtn = true
+        }
+      },
+      error => {
+        console.log(error.message)
       }
     )
   }
@@ -255,6 +308,27 @@ export default {
         font-size: 15px;
         line-height: 1.8;
         color: var(--primary-text);
+      }
+      .relationsContainer{
+        width: 70%;
+        margin: 0 0 3rem 5rem;
+        padding: 1rem 1.8rem;
+        border-radius: 0.75rem;
+        // background-color: #fafafa;
+        background-color: var(--secondary-background);
+        .relationsTitle{
+          display: block;
+          margin-bottom: 0.6rem;
+        }
+        .relationsContent{
+          width: 100%;
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: flex-start;
+        }
+        .Toggle{
+          width: 100%;
+        }
       }
     }
   }

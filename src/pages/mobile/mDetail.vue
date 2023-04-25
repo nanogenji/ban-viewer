@@ -244,15 +244,15 @@ export default {
     },
     textToggle(){
       this.isTextToggle = !this.isTextToggle
-      this.isTextToggle === false ? (this.textMax = 120):(this.textMax = 99999)
+      this.isTextToggle === false ? this.textMax = 120 : this.textMax = 99999
     },
     tagToggle(){
       this.isTagToggle = !this.isTagToggle
-      this.isTagToggle === false ? (this.tagMax = 8):(this.tagMax = 99999)
+      this.isTagToggle === false ? this.tagMax = 8 : this.tagMax = 99999
     },
     chaToggle(){
       this.isChaToggle = !this.isChaToggle
-      this.isChaToggle === false ? (this.chaMax = 8):(this.chaMax = 99999)
+      this.isChaToggle === false ? this.chaMax = 8 : this.chaMax = 99999
     }
   },
   computed:{
@@ -260,12 +260,8 @@ export default {
       if(this.item.summary === '' || this.item.summary === undefined){
         return this.item.summary
       }
-      else{
-        if(this.item.summary.length > this.textMax){
-          return this.item.summary.substring(0,this.textMax) + '...'
-        }
-        else{
-        }
+      else if(this.item.summary.length > this.textMax){
+        return this.item.summary.substring(0,this.textMax) + '...'
       }
       return this.item.summary
     },
@@ -273,12 +269,8 @@ export default {
       if(this.item.tags === '' || this.item.tags === undefined){
         return this.item.tags
       }
-      else{
-        if(this.item.tags.length > this.tagMax){
-          return this.item.tags.slice(0,this.tagMax)
-        }
-        else{
-        }
+      else if(this.item.tags.length > this.tagMax){
+        return this.item.tags.slice(0,this.tagMax)
       }
       return this.item.tags
     },
@@ -286,12 +278,8 @@ export default {
       if(this.characters === '' || this.characters === undefined){
         return this.characters
       }
-      else{
-        if(this.characters.length > this.chaMax){
-          return this.characters.slice(0,this.chaMax)
-        }
-        else{
-        }
+      else if(this.characters.length > this.chaMax){
+        return this.characters.slice(0,this.chaMax)
       }
       return this.characters
     },
@@ -342,7 +330,7 @@ export default {
     axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}/characters`).then(
       response => {
         this.characters = response.data
-        this.characters = this.characters.slice(0,42)//长篇作品人物过多，限制42
+        // this.characters = this.characters.slice(0,42)//长篇作品人物过多，限制42
         if(this.characters.length > this.chaMax){
           this.chaToggleBtn = true
         }

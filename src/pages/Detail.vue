@@ -119,9 +119,9 @@
             <el-card class="charactersContainer">
               <a class="charactersTitle">角色介绍</a>
               <!-- 部分作品未收录角色信息 -->
-              <div v-if='characters.length>0' class="charactersContent">
+              <div v-if='sliceCha.length>0' class="charactersContent">
                 <!-- cv信息可能不全 -->
-                <CharacterCard v-for='character in characters' :key='character.id'
+                <CharacterCard v-for='character in sliceCha' :key='character.id'
                   :id='character.id'
                   :actor="character.actors[0]?character.actors[0].name:''"
                   :actorId='character.actors[0]?character.actors[0].id:0'
@@ -129,9 +129,32 @@
                   :name='character.name'
                   :relation='character.relation'
                 />
+                <el-button size="mini" type="text" @click="chaToggle" class="Toggle" v-if="chaToggleBtn">
+                  {{ isChaToggle?'收起':'展开' }}
+                  <i class="el-icon--right " :class="isChaToggle?'el-icon-arrow-up':'el-icon-arrow-down' " />
+                </el-button>
               </div>
               <div v-else class="charactersContent">
                 暂无相关角色信息
+              </div>
+            </el-card>
+            <el-card class="relationsContainer">
+              <a class="relationsTitle">相关条目</a>
+              <div v-if='relations.length>0' class="relationsContent">
+                <GridCard v-for='relation in sliceRelation' :key='relation.id'
+                  :id='relation.id'
+                  :img='relation.images.grid'
+                  :name='relation.name'
+                  :name_cn='relation.name_cn'
+                  :relation='relation.relation'
+                />
+                <el-button size="mini" type="text" @click="relationToggle" class="Toggle" v-if="relationToggleBtn">
+                  {{isRelationToggle?'收起':'展开'}}
+                  <i class="el-icon--right" :class="isChaToggle?'el-icon-arrow-up':'el-icon-arrow-down' " />
+                </el-button>
+              </div>
+              <div v-else class="relationsContent">
+                暂无相关条目信息
               </div>
             </el-card>
           </el-main>
@@ -143,6 +166,7 @@
 
 <script>
 import CharacterCard from '../components/CharacterCard'
+import GridCard from '../components/GridCard'
 import { nanoid } from 'nanoid'
 import axios from 'axios'
 export default {
@@ -151,6 +175,7 @@ export default {
     return {
       item:[],
       characters:[],
+      relations:[],
       infoList:[],
       apiError:false,
       errorMsg:'',
@@ -167,11 +192,18 @@ export default {
       acfunsrc:'',
       wetvsrc:'',
       iqiyisrc:'',
-      youkusrc:''
+      youkusrc:'',
+      isChaToggle:false,
+      chaToggleBtn:false,
+      chaMax:15,
+      isRelationToggle:false,
+      relationToggleBtn:false,
+      relationMax:16
     }
   },
   components:{
-    CharacterCard
+    CharacterCard,
+    GridCard
   },
   methods:{
     findPlayer(){
@@ -245,6 +277,35 @@ export default {
           tagValue:value
         }
       })
+    },
+    chaToggle(){
+      this.isChaToggle = !this.isChaToggle
+      this.isChaToggle === false ? this.chaMax = 15 : this.chaMax = 99999
+    },
+    relationToggle(){
+      this.isRelationToggle = !this.isRelationToggle
+      this.isRelationToggle === false ? this.relationMax = 16 : this.relationMax = 99999
+    }
+  },
+  computed:{
+    sliceCha(){
+      if(this.characters === '' || this.characters === undefined){
+        return this.characters
+      }
+      else if(this.characters.length > this.chaMax){
+        return this.characters.slice(0,this.chaMax)
+      }
+      return this.characters
+    },
+    sliceRelation(){
+      if(this.relations === '' || this.relations === undefined){
+        return this.relations
+      }
+      else if(this.relations.length > this.relationMax){
+        return this.relations.slice(0,this.relationMax)
+      }
+
+      return this.relations
     }
   },
   beforeCreate(){
@@ -263,7 +324,6 @@ export default {
     axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}`).then(//不用跨域http://localhost:8080/api/v0/subjects/${this.$route.query.id}
       response => {
         this.item = response.data
-        console.log(this.item)
         //过滤无效info，防止undefined
         for(let i=0;i<this.item.infobox.length;i++){
           // eslint-disable-next-line
@@ -286,7 +346,23 @@ export default {
     axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}/characters`).then(
       response => {
         this.characters = response.data
-        this.characters = this.characters.slice(0,41)//长篇作品人物过多，限制41
+        console.log(this.characters)
+        // this.characters = this.characters.slice(0,41)//长篇作品人物过多，限制41
+        if(this.characters.length > this.chaMax){
+          this.chaToggleBtn = true
+        }
+      },
+      error => {
+        console.log(error.message)
+      }
+    )
+    //关联条目
+    axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}/subjects`).then(
+      response => {
+        this.relations = response.data
+        if(this.relations.length > this.relationMax){
+          this.relationToggleBtn = true
+        }
       },
       error => {
         console.log(error.message)
@@ -474,6 +550,29 @@ export default {
           display: flex;
           flex-flow: row wrap;
           justify-content: flex-start;
+        }
+        .Toggle{
+          width: 100%;
+        }
+      }
+      .relationsContainer{
+        width: 70%;
+        margin: 0 0 3rem 5rem;
+        border-radius: 0.75rem;
+        // background-color: #fafafa;
+        background-color: var(--secondary-background);
+        .relationsTitle{
+          display: block;
+          margin-bottom: 0.6rem;
+        }
+        .relationsContent{
+          width: 100%;
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: flex-start;
+        }
+        .Toggle{
+          width: 100%;
         }
       }
     }
