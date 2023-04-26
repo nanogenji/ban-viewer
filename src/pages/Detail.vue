@@ -116,10 +116,12 @@
                 <a class="tagCount">{{tag.count}}</a>
                 </el-tag>
             </el-card>
+            <!-- character -->
             <el-card class="charactersContainer">
               <a class="charactersTitle">角色介绍</a>
+              <div class="loading" style="min-height:100px" v-if="this.isChaLoading" v-loading='this.isChaLoading' element-loading-text="正在加载中...请稍候"></div>
               <!-- 部分作品未收录角色信息 -->
-              <div v-if='sliceCha.length>0' class="charactersContent">
+              <div v-else-if='sliceCha.length>0' class="charactersContent">
                 <!-- cv信息可能不全 -->
                 <CharacterCard v-for='character in sliceCha' :key='character.id'
                   :id='character.id'
@@ -138,9 +140,31 @@
                 暂无相关角色信息
               </div>
             </el-card>
+            <!-- person -->
+            <el-card class="charactersContainer">
+              <a class="charactersTitle">制作成员</a>
+              <div class="loading" style="min-height:100px" v-if="this.isPersonLoading" v-loading='this.isPersonLoading' element-loading-text="正在加载中...请稍候"></div>
+              <div v-else-if='persons.length>0' class="charactersContent">
+                <PersonCard v-for='person in slicePerson' :key='person.id'
+                  :id='person.id'
+                  :img='person.images.grid'
+                  :name='person.name'
+                  :relation='person.relation'
+                />
+                <el-button size="mini" type="text" @click="personToggle" class="Toggle" v-if="personToggleBtn">
+                  {{ isPersonToggle?'收起':'展开' }}
+                  <i class="el-icon--right " :class="isPersonToggle?'el-icon-arrow-up':'el-icon-arrow-down' " />
+                </el-button>
+              </div>
+              <div v-else class="charactersContent">
+                暂无制作成员信息
+              </div>
+            </el-card>
+            <!-- relation -->
             <el-card class="relationsContainer">
               <a class="relationsTitle">相关条目</a>
-              <div v-if='relations.length>0' class="relationsContent">
+              <div class="loading" style="min-height:100px" v-if="this.isRelationLoading" v-loading='this.isRelationLoading' element-loading-text="正在加载中...请稍候"></div>
+              <div v-else-if='relations.length>0' class="relationsContent">
                 <GridCard v-for='relation in sliceRelation' :key='relation.id'
                   :id='relation.id'
                   :img='relation.images.grid'
@@ -166,6 +190,7 @@
 
 <script>
 import CharacterCard from '../components/CharacterCard'
+import PersonCard from '../components/PersonCard'
 import GridCard from '../components/GridCard'
 import { nanoid } from 'nanoid'
 import axios from 'axios'
@@ -175,6 +200,7 @@ export default {
     return {
       item:[],
       characters:[],
+      persons:[],
       relations:[],
       infoList:[],
       apiError:false,
@@ -193,16 +219,23 @@ export default {
       wetvsrc:'',
       iqiyisrc:'',
       youkusrc:'',
+      isChaLoading:true,
+      isPersonLoading:true,
+      isRelationLoading:true,
       isChaToggle:false,
       chaToggleBtn:false,
       chaMax:15,
       isRelationToggle:false,
       relationToggleBtn:false,
-      relationMax:16
+      relationMax:16,
+      isPersonToggle:false,
+      personToggleBtn:false,
+      personMax:15,
     }
   },
   components:{
     CharacterCard,
+    PersonCard,
     GridCard
   },
   methods:{
@@ -282,6 +315,10 @@ export default {
       this.isChaToggle = !this.isChaToggle
       this.isChaToggle === false ? this.chaMax = 15 : this.chaMax = 99999
     },
+    personToggle(){
+      this.isPersonToggle = !this.isPersonToggle
+      this.isPersonToggle === false ? this.personMax = 15 : this.personMax = 99999
+    },
     relationToggle(){
       this.isRelationToggle = !this.isRelationToggle
       this.isRelationToggle === false ? this.relationMax = 16 : this.relationMax = 99999
@@ -296,6 +333,15 @@ export default {
         return this.characters.slice(0,this.chaMax)
       }
       return this.characters
+    },
+    slicePerson(){
+      if(this.persons === '' || this.persons === undefined){
+        return this.persons
+      }
+      else if(this.persons.length > this.personMax){
+        return this.persons.slice(0,this.personMax)
+      }
+      return this.persons
     },
     sliceRelation(){
       if(this.relations === '' || this.relations === undefined){
@@ -346,10 +392,23 @@ export default {
     axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}/characters`).then(
       response => {
         this.characters = response.data
-        console.log(this.characters)
         // this.characters = this.characters.slice(0,41)//长篇作品人物过多，限制41
+        this.isChaLoading = false
         if(this.characters.length > this.chaMax){
           this.chaToggleBtn = true
+        }
+      },
+      error => {
+        console.log(error.message)
+      }
+    )
+    //staff
+    axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}/persons`).then(
+      response => {
+        this.persons = response.data.slice(0,150)
+        this.isPersonLoading = false
+        if(this.persons.length > this.personMax){
+          this.personToggleBtn = true
         }
       },
       error => {
@@ -360,6 +419,7 @@ export default {
     axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}/subjects`).then(
       response => {
         this.relations = response.data
+        this.isRelationLoading = false
         if(this.relations.length > this.relationMax){
           this.relationToggleBtn = true
         }
