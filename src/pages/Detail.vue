@@ -1,7 +1,7 @@
 <template>
   <div class="detailContainer">
     <div class="detailContent">
-      <div class="loading" v-if="this.item.length == []" v-loading='true' element-loading-text="正在加载中...请稍候"></div>
+      <div class="loading" v-if="this.isLoading" v-loading='true' element-loading-text="正在加载中...请稍候"></div>
       <div class="loading" v-else-if="this.apiError">
         <el-alert
           title="加载错误...请稍后再试"
@@ -109,7 +109,7 @@
             </el-card>
             <!-- Tags -->
             <el-card class="tagContainer">
-              <a class="tagTitle" v-if="item.tags.length > 0">大家把{{item.name_cn?item.name_cn:item.name}}标注为：</a>
+              <a class="tagTitle" v-if="item.tags.length > 0">大家把 <a style="font-weight:600">{{item.name_cn?item.name_cn:item.name}}</a> 标注为：</a>
               <a class="tagTitle" v-else>该作品还没有标签</a>
               <el-tag class="tag" v-for='tag in item.tags' :key="tag.id" type="info" @click="handleTag(tag.name)">
                 <a class="tagName">{{tag.name}}</a>
@@ -203,6 +203,7 @@ export default {
       persons:[],
       relations:[],
       infoList:[],
+      isLoading:true,
       apiError:false,
       errorMsg:'',
       isDark:false,
@@ -369,6 +370,7 @@ export default {
     //剧集信息
     axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}`).then(//不用跨域http://localhost:8080/api/v0/subjects/${this.$route.query.id}
       response => {
+        this.isLoading = false
         this.item = response.data
         //过滤无效info，防止undefined
         for(let i=0;i<this.item.infobox.length;i++){
@@ -383,9 +385,10 @@ export default {
         }
       },
       error => {
+        this.isLoading = false
         this.apiError = true
         this.errorMsg = error.message
-        console.log(error.messgae)
+        console.log(error.message)
       }
     )
     //角色信息
@@ -604,6 +607,9 @@ export default {
         .charactersTitle{
           display: block;
           margin-bottom: 0.6rem;
+          padding-left: 10px;
+          color: var(--primary-text);
+          font-weight: 600;
         }
         .charactersContent{
           width: 100%;
@@ -623,7 +629,11 @@ export default {
         background-color: var(--secondary-background);
         .relationsTitle{
           display: block;
-          margin-bottom: 0.6rem;
+          margin-top: 0.2rem;
+          margin-bottom: 1.2rem;
+          padding-left: 16px;
+          color: var(--primary-text);
+          font-weight: 600;
         }
         .relationsContent{
           width: 100%;

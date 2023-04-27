@@ -1,7 +1,7 @@
 <template>
   <div class="personContainer">
     <div class="personContent">
-      <div class="loading" v-if="this.item.length == []" v-loading='true' element-loading-text="正在加载中...请稍候"></div>
+      <div class="loading" v-if="this.isLoading" v-loading='true' element-loading-text="正在加载中...请稍候"></div>
       <div class="loading" v-else-if="this.apiError">
         <el-alert
           title="加载错误...请稍后再试"
@@ -77,7 +77,8 @@
             </el-card>
             <el-card class="relationsContainer">
               <a class="relationsTitle">参演条目</a>
-              <div v-if='relations.length>0' class="relationsContent">
+              <div class="loading" style="min-height:100px" v-if="this.isRelationLoading" v-loading='this.isRelationLoading' element-loading-text="正在加载中...请稍候"></div>
+              <div v-else-if='relations.length>0' class="relationsContent">
                 <GridCard v-for='relation in sliceRelation' :key='relation.id'
                   :id='relation.id'
                   :img='relation.image'
@@ -109,7 +110,8 @@ export default {
   data(){
     return {
       item:[],
-      infoList:[],
+      isLoading:true,
+      isRelationLoading:true,
       relations:[],
       nickname:[],
       name_cn:'',
@@ -166,6 +168,7 @@ export default {
     //剧集信息
     axios.get(`https://api.bgm.tv/v0/persons/${this.$route.query.actorId}`).then(
       response => {
+        this.isLoading = false
       this.item = response.data
         for(let i=0;i<this.item.infobox.length;i++){
           let del1 = null
@@ -183,19 +186,23 @@ export default {
         }
       },
       error => {
+        this.isLoading = false
         this.apiError = true
         this.errorMsg = error.message
-        console.log(error.messgae)
+        console.log(error.message)
       }
     )
+    //参演
     axios.get(`https://api.bgm.tv/v0/persons/${this.$route.query.actorId}/subjects`).then(
       response => {
         this.relations = response.data
+        this.isRelationLoading = false
         if(this.relations.length > this.relationMax){
           this.relationToggleBtn = true
         }
       },
       error => {
+        this.isRelationLoading = false
         console.log(error.message)
       }
     )
@@ -318,7 +325,10 @@ export default {
         background-color: var(--secondary-background);
         .relationsTitle{
           display: block;
-          margin-bottom: 0.6rem;
+          font-size: 1.1rem;
+          color: var(--primary-text);
+          margin-bottom: 1.2rem;
+          padding-left: 10px;
         }
         .relationsContent{
           width: 100%;

@@ -12,7 +12,7 @@
       </div>
       <div class="actorInfo">
         <a class="personKey">职责</a>
-        <a v-if='relation' class="personValue active">{{relation}}</a>
+        <a v-if='relation' class="personValue">{{relation}}</a>
         <a v-else class="personValue">暂无信息</a>
       </div>
     </div>
@@ -98,6 +98,12 @@ export default {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-around;
+    .personInfo{
+      width: 110px;
+      white-space: nowrap; 
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     .personKey{
       color: #999999;
       font-size: 0.6rem;

@@ -28,13 +28,24 @@ export default {
   },
   methods:{
     toDetail(){
-      this.$router.push({
-        path:'detail',
-        query:{
-          id:this.id
-        }
-      })
-      location.reload();
+      if(this.$route.path === '/detail'){
+        this.$router.push({
+          path:'detail',
+          query:{
+            id:this.id
+          }
+        })
+        location.reload();
+        // window.scrollTo({ top: 480, behavior: 'smooth' });
+      }
+      else{
+        this.$router.push({
+          path:'detail',
+          query:{
+            id:this.id
+          }
+        })
+      }
     }
   }
 }
