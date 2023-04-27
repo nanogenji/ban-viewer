@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import storage from './utils/localstorage';
 import store from './store'
 import { VueHammer } from 'vue2-hammer'
+import md5 from 'js-md5';
 import './assets/css/element-variables.scss'
 Vue.use(VueHammer)
 Vue.config.productionTip = false
@@ -18,6 +19,7 @@ Vue.use(storage);
 
 moment.locale('en');
 Vue.prototype.$moment = moment;
+Vue.prototype.$md5 = md5;
 // if(localStorage.getItem('theme') === 'default'){
 //   import('../src/assets/css/theme/default.scss')
 // }
