@@ -162,7 +162,7 @@ export default {
       this.isRelationToggle === false ? this.relationMax = 16 : this.relationMax = 99999
     },
     encodeUtf8(str) {
-      const encoder = new TextEncoder('utf8');    
+      const encoder = new TextEncoder('utf8');
       return encoder.encode(str);
     },
     translate(){
@@ -178,33 +178,42 @@ export default {
         this.translatedata.appid = appId
         this.translatedata.salt = salt
         this.translatedata.sign = sign
-        // const options = {
-        //   method:'POST',
-        //   headers:{'Content-Type':'application/x-www-form-urlencoded'},
-        //   data:this.translatedata,
-        //   url:'https://fanyi-api.baidu.com/api/trans/vip/translate'
-        // }
-        // axios.post(options.url,options.data,options.headers).then(
+
+
+        // axios.get(encodeURI(`http://localhost:8080/bdapi?q=${this.translatedata.q}&from=auto&to=zh&appid=${this.translatedata.appid}&salt=${this.translatedata.salt}&sign=${this.translatedata.sign}`)).then(
         //   response => {
         //     console.log(response)
+        //     for(let i = 0;i < response.data.trans_result.length;i++){
+        //       this.translatedText += response.data.trans_result[i].dst
+        //     }
+        //     console.log(this.translatedText)
         //   },
         //   error => {
+        //     console.log(error)
         //   }
         // )
 
         //q转为utf-8
-        axios.get(encodeURI(`http://localhost:8080/bdapi?q=${this.translatedata.q}&from=auto&to=zh&appid=${this.translatedata.appid}&salt=${this.translatedata.salt}&sign=${this.translatedata.sign}`)).then(
-          response => {
-            console.log(response)
-            for(let i = 0;i < response.data.trans_result.length;i++){
-              this.translatedText += response.data.trans_result[i].dst
-            }
-            console.log(this.translatedText)
-          },
-          error => {
-            console.log(error)
+        this.$jsonp(encodeURI(`https://fanyi-api.baidu.com/api/trans/vip/translate?q=${this.translatedata.q}&from=auto&to=zh&appid=${this.translatedata.appid}&salt=${this.translatedata.salt}&sign=${this.translatedata.sign}`), {
+        }).then((res)=>{
+          console.log(res)
+          for(let i = 0;i < res.trans_result.length;i++){
+            this.translatedText += res.trans_result[i].dst
           }
-        )
+            console.log(this.translatedText)
+        })
+        // axios.get(encodeURI(`https://fanyi-api.baidu.com/api/trans/vip/translate?q=${this.translatedata.q}&from=auto&to=zh&appid=${this.translatedata.appid}&salt=${this.translatedata.salt}&sign=${this.translatedata.sign}`)).then(
+        //   response => {
+        //     console.log(response)
+        //     for(let i = 0;i < response.data.trans_result.length;i++){
+        //       this.translatedText += response.data.trans_result[i].dst
+        //     }
+        //     console.log(this.translatedText)
+        //   },
+        //   error => {
+        //     console.log(error)
+        //   }
+        // )
       }
       this.isTrans = !this.isTrans
     }

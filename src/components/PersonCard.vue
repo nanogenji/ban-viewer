@@ -100,7 +100,7 @@ export default {
     justify-content: space-around;
     .personInfo{
       width: 110px;
-      white-space: nowrap; 
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }

@@ -9,6 +9,7 @@ import storage from './utils/localstorage';
 import store from './store'
 import { VueHammer } from 'vue2-hammer'
 import md5 from 'js-md5';
+import { VueJsonp  } from 'vue-jsonp'
 import './assets/css/element-variables.scss'
 Vue.use(VueHammer)
 Vue.config.productionTip = false
@@ -16,7 +17,7 @@ Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(VueRouter)
 Vue.use(storage);
-
+Vue.use(VueJsonp)
 moment.locale('en');
 Vue.prototype.$moment = moment;
 Vue.prototype.$md5 = md5;
