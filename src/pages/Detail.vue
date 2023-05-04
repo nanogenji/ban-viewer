@@ -106,6 +106,13 @@
             <el-card class="box-card summary" shadow="never">
               <a v-if="item.summary" style="padding:1rem 1.1rem 1rem 1.1rem;display:block;">{{item.summary}}</a>
               <a v-else>暂无剧集简介...</a>
+              <a class="translateIcon" @click="translate">
+                <img src='../assets/translate.svg'>
+              </a>
+              <div class="translate" v-if="isTrans">
+                <el-divider></el-divider>
+                <a style="padding:1rem 1.1rem 1rem 1.1rem;display:block;">{{this.translatedText}}</a>
+              </div>
             </el-card>
             <!-- Tags -->
             <el-card class="tagContainer">
@@ -232,6 +239,16 @@ export default {
       isPersonToggle:false,
       personToggleBtn:false,
       personMax:15,
+      isTrans:false,
+      translatedText:'',
+      translatedata:{
+        'q':'',
+        'from':'auto',
+        'to':'zh',
+        'appid':'',
+        'salt':'',
+        'sign':''
+      }
     }
   },
   components:{
@@ -323,6 +340,31 @@ export default {
     relationToggle(){
       this.isRelationToggle = !this.isRelationToggle
       this.isRelationToggle === false ? this.relationMax = 16 : this.relationMax = 99999
+    },
+    translate(){
+      if(!this.isTrans && this.translatedText.length === 0){
+        let sign = ''
+        let appId = '20230427001658354'
+        let key = 'BORIiVqIc6d4rWj6w4_D'
+        let salt = parseInt(Math.random()*100000)
+        let q = this.item.summary
+        let str = appId + q + salt + key
+        sign = this.$md5(str)
+        this.translatedata.q = q
+        this.translatedata.appid = appId
+        this.translatedata.salt = salt
+        this.translatedata.sign = sign
+        //q转为utf-8
+        this.$jsonp(encodeURI(`https://fanyi-api.baidu.com/api/trans/vip/translate?q=${this.translatedata.q}&from=auto&to=zh&appid=${this.translatedata.appid}&salt=${this.translatedata.salt}&sign=${this.translatedata.sign}`), {
+        }).then((res)=>{
+          console.log(res)
+          for(let i = 0;i < res.trans_result.length;i++){
+            this.translatedText += res.trans_result[i].dst
+          }
+            console.log(this.translatedText)
+        })
+      }
+      this.isTrans = !this.isTrans
     }
   },
   computed:{
@@ -569,6 +611,12 @@ export default {
         background-color: var(--secondary-background);
         line-height: 1.8;
         color: var(--primary-text);
+        .translateIcon{
+          display:flex;
+          width:95%;
+          margin-top: -20px;
+          flex-flow: row-reverse nowrap;
+        }
       }
       .tagContainer{
         width: 70%;

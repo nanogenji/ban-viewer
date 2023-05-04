@@ -387,7 +387,9 @@ export default {
         line-height: 1.8;
         color: var(--primary-text);
         .translateIcon{
-          width: 100%;
+          display:flex;
+          width:95%;
+          flex-flow: row-reverse nowrap;
         }
       }
       .relationsContainer{

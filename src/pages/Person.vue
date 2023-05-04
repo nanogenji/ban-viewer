@@ -71,7 +71,7 @@
             </el-table>
           </el-aside>
           <el-main class="personMain">
-            <el-card class="box-card summary" shadow="never">
+            <el-card class="summary" shadow="never">
               <a v-if="item.summary">{{item.summary}}</a>
               <a v-else>暂无角色简介...</a>
               <a class="translateIcon" @click="translate">
@@ -357,6 +357,11 @@ export default {
         font-size: 15px;
         line-height: 1.8;
         color: var(--primary-text);
+        .translateIcon{
+          display:flex;
+          width:95%;
+          flex-flow: row-reverse nowrap;
+        }
       }
       .relationsContainer{
         width: 70%;
