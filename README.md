@@ -44,9 +44,7 @@ Bangumi是一个提供书影音信息的站点（类似于豆瓣）
 ![Snipaste_2023-05-12_20-02-53](https://github.com/nanogenji/ban-viewer/assets/81917638/014f716a-7277-4bbe-b81e-46096780b301)
 ![Snipaste_2023-05-12_22-52-27](https://github.com/nanogenji/ban-viewer/assets/81917638/93acd5e1-5368-4e9a-9502-9dd6284d7a5c)
 ![Snipaste_2023-05-12_20-01-31](https://github.com/nanogenji/ban-viewer/assets/81917638/dc7d65fe-5560-443d-af20-c174388b6068)
-<img src='https://github.com/nanogenji/ban-viewer/assets/81917638/0bc191b1-0630-400e-8ea5-e3d74f256991' style="width:33%;"/>
-<img src='https://github.com/nanogenji/ban-viewer/assets/81917638/d5b1e69c-4d14-4a2b-a614-39a529087251' style="width:33%;"/>
-<img src='https://github.com/nanogenji/ban-viewer/assets/81917638/83b6f739-4e23-4451-b9d0-d53ed7e19d01' style="width:33%;"/>
+<img src='https://github.com/nanogenji/ban-viewer/assets/81917638/0bc191b1-0630-400e-8ea5-e3d74f256991' style="width:33%;"/><img src='https://github.com/nanogenji/ban-viewer/assets/81917638/d5b1e69c-4d14-4a2b-a614-39a529087251' style="width:33%;"/><img src='https://github.com/nanogenji/ban-viewer/assets/81917638/83b6f739-4e23-4451-b9d0-d53ed7e19d01' style="width:33%;"/>
 ![splice1](https://github.com/nanogenji/ban-viewer/assets/81917638/94e197c5-810a-4ce7-a62c-ea9a84972db1)
 ![splice3](https://github.com/nanogenji/ban-viewer/assets/81917638/ac673f1c-ecb9-4d91-b045-75c165bf41b6)
 ![splice2](https://github.com/nanogenji/ban-viewer/assets/81917638/7f1d5cf7-6df0-4722-8694-706ad82093af)
