@@ -1,12 +1,12 @@
 ## Introduction
 
-本项目是基于Vue + element-ui 开发的 Bangumi 第三方SPA
+本项目是基于Vue 开发的 Bangumi 第三方SPA
 
 大部分功能已开发完成
 
 Bangumi是一个提供书影音信息的站点（类似于豆瓣）
 
-本人开发经验不足，该项目用于练手，希望通过开发学习更多
+该项目用于练手，希望通过实践学习更多开发知识
 
 感谢Bangumi的开源API项目
 
@@ -16,11 +16,19 @@ Bangumi是一个提供书影音信息的站点（类似于豆瓣）
 
 ### 基本功能
 
-- 每日剧集信息
-- 条目、角色详情
+- 每日剧集信息，条目、角色等详情
+
 - 不限于关键词、标签、类别、日期搜索
+
+- 夜间模式、移动端适配
+
+- 查找播放源、内容翻译
+
 - 用户登录、注册
-- 不限于排行榜、近期新作、用户空间、热门标签、查找播放源、夜间模式等
+
+- 排行榜、近期新作、热门标签、用户空间等
+
+  
 
 ## Preview
 
@@ -30,14 +38,16 @@ Bangumi是一个提供书影音信息的站点（类似于豆瓣）
 
 ### 部分页面
 
-![Snipaste_2023-03-21_22-07-21](https://user-images.githubusercontent.com/81917638/226647930-8b634524-0ea9-4778-b278-b01efd861dfd.jpg)
-
-![Snipaste_2023-03-21_22-07-40](https://user-images.githubusercontent.com/81917638/226648033-76ce4474-539d-4d20-90c3-9a72bcd80132.jpg)
-
-![Snipaste_2023-03-21_22-09-23](https://user-images.githubusercontent.com/81917638/226648120-918deb23-e6a2-4966-9b4c-f172719919f6.jpg)
-
-<!-- ![Snipaste_2023-03-21_22-08-14](https://user-images.githubusercontent.com/81917638/226648629-952ed41a-240e-471e-a696-a7094f31c550.jpg) -->
-<img src="https://user-images.githubusercontent.com/81917638/226648629-952ed41a-240e-471e-a696-a7094f31c550.jpg" style="width:33%;" /><img src="https://user-images.githubusercontent.com/81917638/226648851-f82b65f8-af1b-40ca-8147-0fd054856661.jpg" style="width:33%;" /><img src="https://user-images.githubusercontent.com/81917638/226648940-f19b2d6d-7ee6-4085-9ed8-a8af224854ec.jpg" style="width:33%;" />
+![Snipaste_2023-05-12_20-00-13](https://github.com/nanogenji/ban-viewer/assets/81917638/08f62cbd-d534-4b69-b110-40e278501dbf)
+![Snipaste_2023-05-12_20-03-12](https://github.com/nanogenji/ban-viewer/assets/81917638/249ef6f4-6e57-4e7d-a6b1-f912dd48a553)
+![Snipaste_2023-05-12_20-00-37](https://github.com/nanogenji/ban-viewer/assets/81917638/964872c0-06f6-4100-82e6-ab4498a748cc)
+![Snipaste_2023-05-12_20-02-53](https://github.com/nanogenji/ban-viewer/assets/81917638/014f716a-7277-4bbe-b81e-46096780b301)
+![Snipaste_2023-05-12_22-52-27](https://github.com/nanogenji/ban-viewer/assets/81917638/93acd5e1-5368-4e9a-9502-9dd6284d7a5c)
+![Snipaste_2023-05-12_20-01-31](https://github.com/nanogenji/ban-viewer/assets/81917638/dc7d65fe-5560-443d-af20-c174388b6068)
+<img src='https://github.com/nanogenji/ban-viewer/assets/81917638/0bc191b1-0630-400e-8ea5-e3d74f256991' style="width:33%;"/><img src='https://github.com/nanogenji/ban-viewer/assets/81917638/d5b1e69c-4d14-4a2b-a614-39a529087251' style="width:33%;"/><img src='https://github.com/nanogenji/ban-viewer/assets/81917638/83b6f739-4e23-4451-b9d0-d53ed7e19d01' style="width:33%;"/>
+![splice1](https://github.com/nanogenji/ban-viewer/assets/81917638/94e197c5-810a-4ce7-a62c-ea9a84972db1)
+![splice3](https://github.com/nanogenji/ban-viewer/assets/81917638/ac673f1c-ecb9-4d91-b045-75c165bf41b6)
+![splice2](https://github.com/nanogenji/ban-viewer/assets/81917638/7f1d5cf7-6df0-4722-8694-706ad82093af)
 
 ## Defect
 
@@ -47,11 +57,34 @@ Bangumi是一个提供书影音信息的站点（类似于豆瓣）
 - 部分作品中出现配音演员数据丢失 id:407515
 - 部分作品搜索结果出现评分或排名数据丢失 id:16165
 
-经初步排查，原因均为api返回数据异常，暂无解决方法。
+经初步排查，均为api返回数据异常，暂无解决方法。
 
 ------
 
-**本项目注册仅为实验功能，为了保证您的信息安全，请勿填入常用或重要信息**
+## Update
+
+### v0.2
+
+- 修复少数作品预览无图片导致的加载失败问题
+- 新增加载中过场动画
+- 新增追番人数 / 评分人数
+- 新增查找版权播放源
+- 改进 tag 等部分元素样式
+
+### v0.3
+
+- 新增夜间模式
+- 重新设计ui，更统一和谐的视觉效果
+
+### v0.4
+
+- 自适应优化，适应更多不同尺寸设备显示
+- 移动端适配，现在移动端也能正常浏览了
+
+### v0.5
+
+- 详情新增相关条目
+- 优化ui：折叠、图片拉伸、元素对齐、失败处理等
 
 ## 免责声明
 
@@ -62,6 +95,8 @@ Bangumi是一个提供书影音信息的站点（类似于豆瓣）
 ## PowerBy
 
 [Bangumi API](https://bangumi.github.io/api/)
+
+[bangumi-onair](https://github.com/ekibot/bangumi-onair)
 
 ## Project setup
 
