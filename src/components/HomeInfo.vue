@@ -13,6 +13,7 @@
         <button type="button" :disabled="this.inputValue.length === 0?true:false" class="submitbtn" @click="toSearch"><i class="el-icon-search"></i></button>
       </div>
       <div class="searchHistory" @click.stop="keepBackground" v-show="isShow && this.historyList.length !== 0">
+        <i class="el-icon-delete" @click="deleteHistory"></i>
         <el-tag
           v-for="history in historyList"
           :key="history.timestamp"
@@ -40,8 +41,10 @@ export default {
   },
   methods:{
     showHistory(event){
-      this.isShow = true
-      event.stopPropagation();
+      if(this.$store.state.device === 'PC'){
+        this.isShow = true
+        event.stopPropagation();
+      }
     },
     // eslint-disable-next-line
     keepBackground(){
@@ -73,31 +76,32 @@ export default {
         }
       }
       if(this.$store.state.device === 'Mobile'){
-        if(this.inputValue !== this.oldInputValue || this.$route.path === '/home'){
+        if(this.inputValue !== this.oldInputValue || this.$route.path === '/home'){//判断搜索词是否变化
             this.$router.push({
             path:'msearchresult',
             query:{
               inputValue:this.inputValue
             }
           })
-          this.oldInputValue = this.inputValue//判断搜索词是否变化
+          this.oldInputValue = this.inputValue
         }
         else{
           return false
         }
       }
-      if(this.inputValue !== this.oldInputValue || this.$route.path === '/home'){
+      if(this.inputValue !== this.oldInputValue || this.$route.path === '/home'){//判断搜索词是否变化
           this.$router.push({
           path:'searchresult',
           query:{
             inputValue:this.inputValue
           }
         })
-        this.oldInputValue = this.inputValue//判断搜索词是否变化
+        this.oldInputValue = this.inputValue
       }
       else{
         return false
       }
+      this.isShow = false//防止搜索后立刻出现历史记录框
     },
     tagToSearch(value){
       if(this.$store.state.device === 'Mobile'){
@@ -118,6 +122,10 @@ export default {
     deleteTag(value){
       this.historyList = this.historyList.filter(item => item.value !== value)
       localStorage.setItem('searchHistory',JSON.stringify(this.historyList))
+    },
+    deleteHistory(){
+      this.historyList = []
+      localStorage.removeItem('searchHistory')
     }
   },
   watch:{
@@ -246,6 +254,17 @@ export default {
         transition-timing-function: ease;
         transition-delay: 0s;
         transition-property: background-color;
+        position: relative;
+        .el-icon-delete{
+          position: absolute;
+          top: 10px;
+          right: 15px;
+          // color: var(--regular-text);
+          color: #b3b3b3;
+        }
+        .el-icon-delete{
+          cursor: pointer;
+        }
         .tag{
           margin: 0.8rem 0.2rem 0.4rem 1.2rem;
           border-radius: 0.5rem;
