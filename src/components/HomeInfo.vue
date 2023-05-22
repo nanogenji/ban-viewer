@@ -69,7 +69,6 @@ export default {
           localStorage.setItem('searchHistory',JSON.stringify(this.historyList))
         }
         else{
-          // let i = this.historyList.findIndex(item => item.value === this.inputValue)
           this.historyList = this.historyList.filter(item => item.value !== this.inputValue)
           this.historyList.unshift({value:this.inputValue,timestamp:time})
           localStorage.setItem('searchHistory',JSON.stringify(this.historyList))
@@ -259,7 +258,6 @@ export default {
           position: absolute;
           top: 10px;
           right: 15px;
-          // color: var(--regular-text);
           color: #b3b3b3;
         }
         .el-icon-delete{
