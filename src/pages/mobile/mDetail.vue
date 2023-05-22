@@ -92,7 +92,7 @@
         </el-button>
       </el-card>
       <el-card class="tagContainer">
-        <a class="tagTitle" v-if="item.tags.length > 0">大家把{{item.name_cn?item.name_cn:item.name}}标注为：</a>
+        <a class="tagTitle" v-if="item.tags.length > 0">大家把<a style="font-weight:600">{{item.name_cn?item.name_cn:item.name}}</a>标注为：</a>
         <a class="tagTitle" v-else>该作品还没有标签</a>
         <el-tag class="tag" v-for='tag in sliceTag' :key="tag.id" type="info" v-hammer:tap="(event)=>handleTag(tag.name)" size="mini">
           <a class="tagName">{{tag.name}}</a>
@@ -125,12 +125,33 @@
           暂无相关角色信息
         </div>
       </el-card>
+      <el-card class="relationsContainer">
+        <a class="relationsTitle">相关条目</a>
+        <div class="loading" style="min-height:100px" v-if="this.isRelationLoading" v-loading='this.isRelationLoading' element-loading-text="正在加载中...请稍候"></div>
+        <div v-else-if='relations.length>0' class="relationsContent">
+          <GridCard v-for='relation in sliceRelation' :key='relation.id'
+            :id='relation.id'
+            :img='relation.images.grid'
+            :name='relation.name'
+            :name_cn='relation.name_cn'
+            :relation='relation.relation'
+          />
+          <el-button size="mini" type="text" @click="relationToggle" class="Toggle" v-if="relationToggleBtn">
+            {{isRelationToggle?'收起':'展开'}}
+            <i class="el-icon--right" :class="isRelationToggle?'el-icon-arrow-up':'el-icon-arrow-down' " />
+          </el-button>
+        </div>
+        <div v-else class="relationsContent">
+          暂无相关条目信息
+        </div>
+      </el-card>
     </div>
   </div>
 </template>
 
 <script>
 import CharacterCard from '../../components/CharacterCard'
+import GridCard from '../../components/GridCard'
 import { nanoid } from 'nanoid'
 import axios from 'axios'
 export default {
@@ -140,9 +161,11 @@ export default {
       item:[],
       characters:[],
       infoList:[],
+      relations:[],
       apiError:false,
       errorMsg:'',
       isDark:false,
+      isRelationLoading:true,
       findPlayerLoading:false,
       notfound:false,
       findShow:true,
@@ -164,11 +187,15 @@ export default {
       tagMax:8,
       isChaToggle:false,
       chaToggleBtn:false,
-      chaMax:8
+      chaMax:8,
+      isRelationToggle:false,
+      relationToggleBtn:false,
+      relationMax:9
     }
   },
   components:{
-    CharacterCard
+    CharacterCard,
+    GridCard
   },
   methods:{
     //查找播放源
@@ -253,7 +280,11 @@ export default {
     chaToggle(){
       this.isChaToggle = !this.isChaToggle
       this.isChaToggle === false ? this.chaMax = 8 : this.chaMax = 99999
-    }
+    },
+    relationToggle(){
+      this.isRelationToggle = !this.isRelationToggle
+      this.isRelationToggle === false ? this.relationMax = 9 : this.relationMax = 99999
+    },
   },
   computed:{
     sliceStr(){
@@ -283,6 +314,16 @@ export default {
       }
       return this.characters
     },
+    sliceRelation(){
+      if(this.relations === '' || this.relations === undefined){
+        return this.relations
+      }
+      else if(this.relations.length > this.relationMax){
+        return this.relations.slice(0,this.relationMax)
+      }
+
+      return this.relations
+    }
   },
   beforeCreate(){
     if(this.$store.state.device === 'PC'){
@@ -333,6 +374,21 @@ export default {
         // this.characters = this.characters.slice(0,42)//长篇作品人物过多，限制42
         if(this.characters.length > this.chaMax){
           this.chaToggleBtn = true
+        }
+      },
+      error => {
+        console.log(error.message)
+      }
+    )
+    //关联条目
+    axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}/subjects`).then(
+      response => {
+        let n = Math.floor(response.data.length / 6) * 6
+        this.relations = response.data.slice(0,response.data.length-response.data.length%6)
+        console.log(this.relations.length)
+        this.isRelationLoading = false
+        if(this.relations.length > this.relationMax){
+          this.relationToggleBtn = true
         }
       },
       error => {
@@ -492,7 +548,6 @@ export default {
         .tagTitle{
           display: block;
           margin-bottom: 0.6rem;
-          font-size: 0.9rem;
           color: var(--primary-text);
         }
         .tag{
@@ -520,7 +575,11 @@ export default {
         background-color: var(--secondary-background);
         .charactersTitle{
           display: block;
-          margin-bottom: 0.6rem;
+          margin-top: 0.2rem;
+          margin-bottom: 0rem;
+          padding-left: 16px;
+          color: var(--primary-text);
+          font-weight: 600;
         }
         .charactersContent{
           width: 100%;
@@ -530,6 +589,32 @@ export default {
         }
         .Toggle{
           width: 100%;
+        }
+      }
+      .relationsContainer{
+        width: 85%;
+        margin-top: 1.5rem;
+        border-radius: 0.75rem;
+        background-color: var(--secondary-background);
+        .relationsTitle{
+          display: block;
+          margin-top: 0.2rem;
+          margin-bottom: 1.2rem;
+          padding-left: 16px;
+          color: var(--primary-text);
+          font-weight: 600;
+        }
+        .relationsContent{
+          width: 100%;
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: space-around;
+        }
+        .Toggle{
+          width: 100%;
+        }
+        /deep/.gridContainer{
+          margin: 0;
         }
       }
     }
