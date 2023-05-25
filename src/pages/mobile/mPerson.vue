@@ -32,8 +32,12 @@
         </el-image>
       </div>
       <el-card class="summary" shadow="never">
-        <a v-if="item.summary">{{item.summary}}</a>
+        <a v-if="item.summary">{{sliceStr}}</a>
         <a v-else>暂无角色简介...</a>
+        <el-button size="mini" type="text" @click="textToggle" class="Toggle" v-if="textToggleBtn">
+          {{ isTextToggle?'收起':'展开' }}
+          <i class="el-icon--right " :class="isTextToggle?'el-icon-arrow-up':'el-icon-arrow-down' " />
+        </el-button>
       </el-card>
       <div v-if="this.nickname.length > 0" class="nicknameContainer">
         <div class="nicknameTitle">
@@ -89,13 +93,33 @@ export default {
       nickname:[],
       name_cn:'',
       apiError:false,
-      errorMsg:''
+      errorMsg:'',
+      isTextToggle:false,
+      textToggleBtn:false,
+      textMax:120
     }
   },
   methods:{
     //侧栏css
     cellStyle(){
       return 'background-color: var(--secondary-background)'
+    },
+    textToggle(){
+      this.isTextToggle = !this.isTextToggle
+      this.isTextToggle === false ? this.textMax = 120 : this.textMax = 99999
+    }
+  },
+  computed:{
+    sliceStr(){
+      if(this.item.summary === '' || this.item.summary === undefined){
+        return this.item.summary
+      }
+      else if(this.item.summary.length > this.textMax){
+        return this.item.summary.substring(0,this.textMax) + '...'
+      }
+      else{
+        return this.item.summary
+      }
     }
   },
   beforeCreate(){
@@ -113,6 +137,9 @@ export default {
     axios.get(`https://api.bgm.tv/v0/persons/${this.$route.query.actorId}`).then(
       response => {
       this.item = response.data
+      if(this.item.summary.length > this.textMax){//btn显示与否
+        this.textToggleBtn = true
+      }
         for(let i=0;i<this.item.infobox.length;i++){
           let del1 = null
           let del2 = null
@@ -231,6 +258,9 @@ export default {
         background-color: var(--secondary-background);
         line-height: 1.5;
         color: var(--primary-text);
+        .Toggle{
+          width: 100%;
+        }
       }
   }
 </style>
