@@ -106,7 +106,8 @@
       <el-card class="charactersContainer">
         <a class="charactersTitle">角色介绍</a>
         <!-- 部分作品未收录角色信息 -->
-        <div v-if='characters.length>0' class="charactersContent">
+        <div class="loading" style="min-height:100px" v-if="this.isChaLoading" v-loading='this.isChaLoading' element-loading-text="正在加载中...请稍候"></div>
+        <div v-else-if='characters.length>0' class="charactersContent">
           <!-- cv信息可能不全 -->
           <CharacterCard v-for='character in sliceCha' :key='character.id'
             :id='character.id'
@@ -165,6 +166,7 @@ export default {
       apiError:false,
       errorMsg:'',
       isDark:false,
+      isChaLoading:true,
       isRelationLoading:true,
       findPlayerLoading:false,
       notfound:false,
@@ -372,6 +374,7 @@ export default {
       response => {
         this.characters = response.data
         // this.characters = this.characters.slice(0,42)//长篇作品人物过多，限制42
+        this.isChaLoading = false
         if(this.characters.length > this.chaMax){
           this.chaToggleBtn = true
         }
@@ -383,9 +386,7 @@ export default {
     //关联条目
     axios.get(`https://api.bgm.tv/v0/subjects/${this.$route.query.id}/subjects`).then(
       response => {
-        let n = Math.floor(response.data.length / 6) * 6
-        this.relations = response.data.slice(0,response.data.length-response.data.length%6)
-        console.log(this.relations.length)
+        this.relations = response.data.slice(0,response.data.length-response.data.length % 6)
         this.isRelationLoading = false
         if(this.relations.length > this.relationMax){
           this.relationToggleBtn = true
@@ -412,7 +413,7 @@ export default {
     flex-flow: column nowrap;
     align-items: center;
     .loading{
-      width: 85%;
+      width: 95%;
       min-height: 500px;
       //原生带有白色bgc
       /deep/.el-loading-mask{
