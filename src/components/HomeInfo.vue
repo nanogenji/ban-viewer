@@ -12,7 +12,7 @@
         <input type="text" class="search-content" v-model="inputValue" @keyup.enter="toSearch" @click="showHistory($event)">
         <button type="button" :disabled="this.inputValue.length === 0?true:false" class="submitbtn" @click="toSearch"><i class="el-icon-search"></i></button>
       </div>
-      <div class="searchHistory" @click.stop="keepBackground" v-show="isShow && this.historyList.length !== 0">
+      <div class="searchHistory" @click.stop="keepBackground" v-show="isHistoryShow && this.historyList.length !== 0">
         <i class="el-icon-delete" @click="deleteHistory"></i>
         <el-tag
           v-for="history in historyList"
@@ -36,13 +36,15 @@ export default {
       inputValue:'',
       oldInputValue:'',
       historyList:[],
-      isShow:false
+      isHistoryShow:false,
+      toMobileSuggest:false,
+      screenWidth:null
     }
   },
   methods:{
     showHistory(event){
       if(this.$store.state.device === 'PC'){
-        this.isShow = true
+        this.isHistoryShow = true
         event.stopPropagation();
       }
     },
@@ -50,7 +52,7 @@ export default {
     keepBackground(){
     },
     closeHistory(){
-      this.isShow = false
+      this.isHistoryShow = false
       console.log('close被触发了')
     },
     toSearch(){
@@ -100,7 +102,7 @@ export default {
       else{
         return false
       }
-      this.isShow = false//防止搜索后立刻出现历史记录框
+      this.isHistoryShow = false//防止搜索后立刻出现历史记录框
     },
     tagToSearch(value){
       if(this.$store.state.device === 'Mobile'){
@@ -125,27 +127,72 @@ export default {
     deleteHistory(){
       this.historyList = []
       localStorage.removeItem('searchHistory')
+    },
+    openMobileSuggest(){
+      this.$confirm('您可能正在用移动设备浏览，建议前往移动版获取更好的体验','确认信息',{
+        distinguishCancelAndClose: true,
+        confirmButtonText:'好，带我去吧',
+        cancelButtonText:'不了，就这样吧'
+      })
+      .then(() => {
+        location.reload()
+        this.$message({
+          type:'success',
+          message:'正在前往移动版'
+        })
+      })
+      .catch(()=>{})
+      // .catch(action => {
+      //   this.$message({
+      //     type:'info',
+      //     message:action === 'cancel' ? '取消':'xx'
+      //   })
+      // })
     }
   },
   watch:{
-    isShow(newValue){
-        if(newValue){
-          document.addEventListener('click',this.closeHistory)
-        }
-        else{
-          document.removeEventListener('click',this.closeHistory)
-        }
+    isHistoryShow(newValue){
+      if(newValue){
+        document.addEventListener('click',this.closeHistory)
       }
+      else{
+        document.removeEventListener('click',this.closeHistory)
+      }
+    },
+    screenWidth(newValue){
+      if(newValue <= 768 && this.$store.state.device === 'PC'){
+        this.toMobileSuggest = true
+      }
+      else{
+        this.toMobileSuggest = false
+      }
+    },
+    toMobileSuggest(newValue){
+      if(newValue){
+        this.openMobileSuggest()
+      }
+    }
+  },
+  mounted(){
+    this.screenWidth = document.body.clientWidth
+    window.onresize = () =>{
+      return (() => {
+        this.screenWidth = document.body.clientWidth
+      })()
+    }
   },
   created() {
   //     document.addEventListener('click',(e)=>{
   //     if(this.$refs.showPanel){
   //         let isSelf = this.$refs.showPanel.contains(e.target)
   //         if(!isSelf){
-  //             this.isShow = false
+  //             this.isHistoryShow = false
   //         }
   //     }
   // })
+  console.log('w'+this.screenWidth)
+  console.log('d'+this.$store.state.device)
+    console.log('```'+this.toMobileSuggest)
     if(JSON.parse(localStorage.getItem('searchHistory'))){
       this.historyList = JSON.parse(localStorage.getItem('searchHistory'))
     }
