@@ -1,6 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   devServer: {
+    allowedHosts: "all",
     proxy: {
       '/api': {
         target: 'https://api.bgm.tv',
