@@ -68,8 +68,8 @@ export default {
   .cardItem{
     width: 250px;
     height: 400px;
-    margin-left: 3rem;
-    margin-right: 3rem;
+    // margin-left: 3rem;
+    // margin-right: 3rem;
     margin-top: 4rem;
     display: flex;
     flex-flow: column nowrap;
@@ -77,6 +77,8 @@ export default {
     // background-color: #ff0000;
     border-radius: 0.5rem;
     cursor: pointer;
+
+    // flex: 0 0 33%;
     .imgContainer{
       width: 250px;
       height: 352px;
