@@ -11,7 +11,7 @@
         effect="dark">
       </el-alert>
     </div>
-      <div class="itemContainer">
+        <div class="itemContainer">
         <MainCard v-for="item in items" :key='item.id'
         :id='item.id'
         :img='item.images?item.images.large:"无图片"'
@@ -159,17 +159,31 @@ export default {
     //     flex: auto;
     //   }
     // }
-    .itemContainer{
+    // .itemContainer{
+    //   width: 85%;
+    //   min-height: 1000px;
+    //   margin: auto;
+    //   display: flex;
+    //   flex-flow: row wrap;
+    //   justify-content: space-evenly;
+    //   // justify-content: flex-start;
+    //   // column-gap: 3rem;
+    // }
+    .itemContainer {
       width: 85%;
       min-height: 1000px;
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: space-evenly;
-    }
-    .itemContainer::after{
-      content: '';
-      width: 736px;
-      // flex: auto;
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      column-gap: 4rem;
+      place-items: center;
+      @media screen and (max-width: 1436px) {
+        grid-template-columns: repeat(2, auto);
+        column-gap: 6rem;
+      }
+      @media screen and (max-width: 1020px) {
+        grid-template-columns: repeat(1, auto);
+        column-gap: 0;
+      }
     }
   }
 @media screen and (max-width:630px){
