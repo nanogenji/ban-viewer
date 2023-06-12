@@ -65,6 +65,7 @@ export default {
   --regular-background:#333;
   --secondary-background:#242424;
   --btn-background:#2f2f2f;
+  --selection:#bf3d5e;
   --pure:#ffffff;
   --primary-text:#eee;
   --regular-text:#909399;
@@ -79,12 +80,16 @@ export default {
   --regular-background:#fffc;
   --secondary-background:#fcfcfc;
   --btn-background:#f4f4f5;
+  --selection:#79ffe1;
   --pure:#000000;
   --primary-text:#344767;
   --regular-text:#909399;
   --gradient:linear-gradient(50deg,#ffd0da,#ffecf1);
   --scrollbar-track-color:rgb(241, 241, 241);
   --scrollbar-thumb-color:rgb(193, 193, 193);
+}
+::selection{
+  background-color: var(--selection);
 }
 body{
   margin: 0px;
