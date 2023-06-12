@@ -8,10 +8,10 @@
           <a style="letterSpacing:3px">影视</a>
           <div class="dropdown-container">
             <ul class="dropdown">
-              <li class="dropdown-item" @click="toRanking(2)"><i class="el-icon-trophy"></i><a style="marginLeft:12px">Top50</a></li>
-              <li class="dropdown-item" @click="toRecently(2)"><i class="el-icon-time"></i><a style="marginLeft:12px">近期新作</a></li>
-              <li class="dropdown-item" @click="toTags(2)"><i class="el-icon-guide"></i><a style="marginLeft:12px">热门标签</a></li>
-              <li class="dropdown-item" @click="toViewAll(2)"><i class="el-icon-files"></i><a style="marginLeft:12px">查看全部</a></li>
+              <li class="dropdown-item" @click="toRanking(2)"><i class="el-icon-trophy dropdown-icon"></i><a style="marginLeft:12px">Top50</a><i class="el-icon-arrow-right"></i></li>
+              <li class="dropdown-item" @click="toRecently(2)"><i class="el-icon-time dropdown-icon"></i><a style="marginLeft:12px">近期新作</a><i class="el-icon-arrow-right"></i></li>
+              <li class="dropdown-item" @click="toTags(2)"><i class="el-icon-guide dropdown-icon"></i><a style="marginLeft:12px">热门标签</a><i class="el-icon-arrow-right"></i></li>
+              <li class="dropdown-item" @click="toViewAll(2)"><i class="el-icon-files dropdown-icon"></i><a style="marginLeft:12px">查看全部</a><i class="el-icon-arrow-right"></i></li>
             </ul>
           </div>
         </li>
@@ -19,10 +19,10 @@
           <a style="letterSpacing:3px">音乐</a>
           <div class="dropdown-container">
             <ul class="dropdown">
-              <li class="dropdown-item" @click="toRanking(3)"><i class="el-icon-trophy"></i><a style="marginLeft:12px">Top50</a></li>
-              <li class="dropdown-item" @click="toRecently(3)"><i class="el-icon-time"></i><a style="marginLeft:12px">近期新作</a></li>
-              <li class="dropdown-item" @click="toTags(3)"><i class="el-icon-guide"></i><a style="marginLeft:12px">热门标签</a></li>
-              <li class="dropdown-item" @click="toViewAll(3)"><i class="el-icon-files"></i><a style="marginLeft:12px">查看全部</a></li>
+              <li class="dropdown-item" @click="toRanking(3)"><i class="el-icon-trophy dropdown-icon"></i><a style="marginLeft:12px">Top50</a><i class="el-icon-arrow-right"></i></li>
+              <li class="dropdown-item" @click="toRecently(3)"><i class="el-icon-time dropdown-icon"></i><a style="marginLeft:12px">近期新作</a><i class="el-icon-arrow-right"></i></li>
+              <li class="dropdown-item" @click="toTags(3)"><i class="el-icon-guide dropdown-icon"></i><a style="marginLeft:12px">热门标签</a><i class="el-icon-arrow-right"></i></li>
+              <li class="dropdown-item" @click="toViewAll(3)"><i class="el-icon-files dropdown-icon"></i><a style="marginLeft:12px">查看全部</a><i class="el-icon-arrow-right"></i></li>
             </ul>
           </div>
         </li>
@@ -30,10 +30,10 @@
           <a style="letterSpacing:3px">图书</a>
           <div class="dropdown-container">
             <ul class="dropdown">
-              <li class="dropdown-item" @click="toRanking(1)"><i class="el-icon-trophy"></i><a style="marginLeft:12px">Top50</a></li>
-              <li class="dropdown-item" @click="toRecently(1)"><i class="el-icon-time"></i><a style="marginLeft:12px">近期新作</a></li>
-              <li class="dropdown-item" @click="toTags(1)"><i class="el-icon-guide"></i><a style="marginLeft:12px">热门标签</a></li>
-              <li class="dropdown-item" @click="toViewAll(1)"><i class="el-icon-files"></i><a style="marginLeft:12px">查看全部</a></li>
+              <li class="dropdown-item" @click="toRanking(1)"><i class="el-icon-trophy dropdown-icon"></i><a style="marginLeft:12px">Top50</a><i class="el-icon-arrow-right"></i></li>
+              <li class="dropdown-item" @click="toRecently(1)"><i class="el-icon-time dropdown-icon"></i><a style="marginLeft:12px">近期新作</a><i class="el-icon-arrow-right"></i></li>
+              <li class="dropdown-item" @click="toTags(1)"><i class="el-icon-guide dropdown-icon"></i><a style="marginLeft:12px">热门标签</a><i class="el-icon-arrow-right"></i></li>
+              <li class="dropdown-item" @click="toViewAll(1)"><i class="el-icon-files dropdown-icon"></i><a style="marginLeft:12px">查看全部</a><i class="el-icon-arrow-right"></i></li>
             </ul>
           </div>
         </li>
@@ -41,10 +41,10 @@
           <a style="letterSpacing:3px">游戏</a>
           <div class="dropdown-container">
             <ul class="dropdown">
-              <li class="dropdown-item" @click="toRanking(4)"><i class="el-icon-trophy"></i><a style="marginLeft:10px">Top50</a></li>
-              <li class="dropdown-item" @click="toRecently(4)"><i class="el-icon-time"></i><a style="marginLeft:10px">近期新作</a></li>
-              <li class="dropdown-item" @click="toTags(4)"><i class="el-icon-guide"></i><a style="marginLeft:10px">热门标签</a></li>
-              <li class="dropdown-item" @click="toViewAll(4)"><i class="el-icon-files"></i><a style="marginLeft:10px">查看全部</a></li>
+              <li class="dropdown-item" @click="toRanking(4)"><i class="el-icon-trophy dropdown-icon"></i><a style="marginLeft:12px">Top50</a><i class="el-icon-arrow-right"></i></li>
+              <li class="dropdown-item" @click="toRecently(4)"><i class="el-icon-time dropdown-icon"></i><a style="marginLeft:12px">近期新作</a><i class="el-icon-arrow-right"></i></li>
+              <li class="dropdown-item" @click="toTags(4)"><i class="el-icon-guide dropdown-icon"></i><a style="marginLeft:12px">热门标签</a><i class="el-icon-arrow-right"></i></li>
+              <li class="dropdown-item" @click="toViewAll(4)"><i class="el-icon-files dropdown-icon"></i><a style="marginLeft:12px">查看全部</a><i class="el-icon-arrow-right"></i></li>
             </ul>
           </div>
         </li>
@@ -54,10 +54,10 @@
       </ul>
       <div>
         <a @click="switchTheme('default')">
-          <i v-show="!isDark" class="el-icon-sunny"></i>
+          <i v-show="!isDark" class="el-icon-sunny theme"></i>
         </a>
         <a @click="switchTheme('dark')">
-          <i v-show="isDark" class="el-icon-moon-night"></i>
+          <i v-show="isDark" class="el-icon-moon-night theme"></i>
         </a>
       </div>
       <button class="login" v-if="!this.btnFlag" @click="toLogin">登录账号</button>
@@ -334,7 +334,8 @@ export default {
   .navi{
     position: fixed;
     // height: 80px;
-    min-height: 56px;
+    // min-height: 56px;
+    min-width: 64px;
     width: 65%;
     // min-width: 690px;
     z-index: 999;
@@ -346,7 +347,8 @@ export default {
     color: var(--primary-text);
     .navbar{
       // height: 70%;
-      height: 56px;
+      // height: 56px;
+      height: 60px;
       width: 90%;
       margin-top: 12px;
       display: flex;
@@ -376,28 +378,45 @@ export default {
         display: flex;
         flex-flow: row nowrap;
         justify-content: flex-end;
+        font-size: 15px;
         .collapse-item{
-          margin-left: 1rem;
-          margin-right: 1rem;
-          height: 100%;
+          // margin-left: 1rem;
+          // margin-right: 1rem;
+          margin-top: 0.4rem;
+          height: 80%;
+          // width: 40px;
+          width: 80px;
+          border-radius: 0.5rem;
           display: flex;
           align-items: center;
           justify-content: center;
           list-style:none;
           cursor:pointer;
         }
+        .collapse-item:hover{
+          background-color: rgba(255, 201, 206, 0.4);
+        }
+        .collapse-item >a{
+          transition-duration: 0.2s;
+        }
+        .collapse-item:hover >a{
+          color: var(--primary-color);
+          // font-weight: 600;
+          transition-duration: 0.2s;
+        }
         .collapse-item:hover .dropdown-container{
           display: block;
           animation-name: menu;
-          animation-duration: 0.2s;
+          animation-duration: 0.5s;
           animation-fill-mode: forwards;
         }
         .dropdown-container{
           display: none;
           opacity: 0;
           position: absolute;
-          top: 3.5rem;
-          width: 10rem;
+          top: 3.4rem;
+          margin-left: 8.2rem;
+          width: 11rem;
           height: 10rem;
           padding:1rem 1rem 2rem 1rem;
           list-style: none;
@@ -413,22 +432,48 @@ export default {
             flex-flow: column nowrap;
             align-items: center;
             .dropdown-item{
-              width: 80%;
-              padding: 0.5rem;
-              margin-top: 0.4rem;
-              color: var(--primary-text);
+              width: 100%;
+              padding: 0.8rem 0.5rem;
+              // margin-top: 0.4rem;
+              color: var(--regular-text);
               border-radius: 0.5rem;
+              font-size: 14px;
+              .dropdown-icon{
+                font-size: 18px;
+                margin-left: 0.4rem;
+              }
+              .el-icon-arrow-right{
+                position: absolute;
+                margin-top: 4px;
+                right: 20px;
+                opacity: 0;
+              }
             }
             .dropdown-item:hover{
-              background-color: rgba($color: #e3e3e3, $alpha: 0.6);
-              transition-duration:0.5s;
+              color: var(--primary-text);
+              background-color: rgba($color: #e3e3e3, $alpha: 0.3);
+              transition-duration:0.2s;
+            }
+            .dropdown-item:hover .el-icon-arrow-right{
+              opacity: 1;
             }
           }
+        }
+        .dropdown-container::before{
+          content: '';
+          display: block;
+          position: absolute;
+          width: 14px;
+          height: 14px;
+          background: var(--secondary-background);
+          top: -7px;
+          left: 15%;
+          transform: translateX(-50%) rotate(45deg);
         }
       }
       .login{
         width: 8%;
-        height: 70%;
+        height: 60%;
         margin-right: 1rem;
         background-color: var(--regular-color);
         border: none;
@@ -440,8 +485,13 @@ export default {
         // color: #fff;
         color: var(--primary-color);
         overflow: hidden;
+        transition-duration: 0.2s;
       }
       .login:hover{
+        color: var(--primary-background);
+        // background: linear-gradient(149deg,#ff9ea6,#ffc7cc);
+        background-color: var(--primary-color);
+        transition-duration: 0.3s;
         cursor: pointer;
       }
       .user{
@@ -457,6 +507,16 @@ export default {
         color: var(--primary-color);
       }
       .user:hover{
+        cursor: pointer;
+      }
+      .theme{
+        font-size: 18px;
+        margin-top: 0.1rem;
+        margin-right: 0.8rem;
+      }
+      .theme:hover{
+        color: var(--primary-color);
+        transition-duration: 0.2s;
         cursor: pointer;
       }
     }
@@ -498,6 +558,7 @@ export default {
     to{opacity: 1}
   }
 </style>
+
 <style lang="scss" scoped>
   .navbar-mobile{
     min-height: 56px;

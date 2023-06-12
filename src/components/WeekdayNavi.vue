@@ -84,7 +84,7 @@ export default {
         // color: #fff;
         // background-color: #ffbebc;
         color: var(--primary-color);;
-        background-color: var(--regular-color);
+        // background-color: var(--regular-color);
         transition-duration:0.2s;
       }
       .active{

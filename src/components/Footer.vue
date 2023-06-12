@@ -16,29 +16,29 @@
         <div class="title">
           <a>信息</a>
         </div>
-        <a class="content">关于我们</a>
-        <a class="content">联系我们</a>
-        <a class="content">用户协议</a>
-        <a class="content">加入我们</a>
+        <a class="content" @click="demo">关于我们</a>
+        <a class="content" @click="demo">联系我们</a>
+        <a class="content" @click="demo">用户协议</a>
+        <a class="content" @click="demo">加入我们</a>
       </div>
 
       <div class="footerCol">
         <div class="title">
           <a>资源与社区</a>
         </div>
-        <a class="content">友情链接</a>
-        <a class="content">广告合作</a>
-        <a class="content">开发日志</a>
+        <a class="content" @click="demo">友情链接</a>
+        <a class="content" @click="demo">广告合作</a>
+        <a class="content" @click="demo">开发日志</a>
       </div>
 
       <div class="footerCol">
         <div class="title">
           <a>支持服务</a>
         </div>
-        <a class="content">帮助中心</a>
-        <a class="content">侵权申诉</a>
-        <a class="content">协议汇总</a>
-        <a class="content">公告</a>
+        <a class="content" @click="demo">帮助中心</a>
+        <a class="content" @click="demo">侵权申诉</a>
+        <a class="content" @click="demo">协议汇总</a>
+        <a class="content" @click="demo">公告</a>
       </div>
 
       <div class="footerCol">
@@ -56,12 +56,21 @@
 </template>
 
 <script>
+import throttle from 'lodash/throttle'
 export default {
   name:'Footer',
   data(){
     return{
       isDark:false
     }
+  },
+  methods:{
+    demo:throttle(function(){
+      this.$message({
+        message:'这只是个示例',
+        type:'success'
+      })
+    },1500)
   },
   watch:{
     '$store.state.isDark':{
@@ -132,7 +141,14 @@ export default {
         .content{
           line-height: 1.7;
           font-size: 0.8rem;
+          color: #666666;
+          margin: 0.2rem 0;
+          transition-duration: 0.3s;
+        }
+        .content:hover{
+          cursor: pointer;
           color: var(--primary-text);
+          transition-duration: 0.3s;
         }
       }
     }

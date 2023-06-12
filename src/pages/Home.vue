@@ -170,7 +170,7 @@ export default {
     //   // column-gap: 3rem;
     // }
     .itemContainer {
-      width: 85%;
+      width: 80%;
       min-height: 1000px;
       display: grid;
       grid-template-columns: repeat(3, auto);
